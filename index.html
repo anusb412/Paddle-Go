@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paddle-Go • Make It Right Design</title>
+    <title>Paddle-Go • Arizona Paddleboarding</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&amp;family=Outfit:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
     <style>
         :root {
             --paddle-gold: #ff9a00;
@@ -15,13 +15,13 @@
         }
         * { font-family: 'Outfit', sans-serif; }
         h1, h2, h3, h4 { font-family: 'Syne', sans-serif; }
-
-        /* ─── HERO ─── */
+        
+        /* HERO */
         .paddle-hero {
             background: #0c0500;
             position: relative;
             overflow: hidden;
-            min-height: 80vh;
+            min-height: 85vh;
             display: flex;
             align-items: center;
         }
@@ -34,7 +34,6 @@
                 radial-gradient(ellipse 50% 40% at 10% 50%, rgba(255,100,0,0.15) 0%, transparent 50%),
                 radial-gradient(ellipse 40% 30% at 90% 30%, rgba(251,191,36,0.12) 0%, transparent 50%);
         }
-        /* Sun reflection on water */
         .sun-reflection {
             position: absolute;
             bottom: 0;
@@ -42,26 +41,15 @@
             transform: translateX(-50%);
             width: 200%;
             height: 60%;
-            background: linear-gradient(to top,
-                rgba(255,94,98,0.2) 0%,
-                rgba(255,154,0,0.1) 30%,
-                transparent 70%
-            );
+            background: linear-gradient(to top, rgba(255,94,98,0.2) 0%, rgba(255,154,0,0.1) 30%, transparent 70%);
             filter: blur(2px);
         }
-        /* Horizon glow */
         .horizon-glow {
             position: absolute;
             bottom: 30%;
             left: 0; right: 0;
             height: 3px;
-            background: linear-gradient(90deg,
-                transparent 0%,
-                rgba(255,154,0,0.5) 20%,
-                rgba(255,255,200,0.8) 50%,
-                rgba(255,154,0,0.5) 80%,
-                transparent 100%
-            );
+            background: linear-gradient(90deg, transparent 0%, rgba(255,154,0,0.5) 20%, rgba(255,255,200,0.8) 50%, rgba(255,154,0,0.5) 80%, transparent 100%);
             filter: blur(1px);
             animation: horizon-pulse 4s ease-in-out infinite;
         }
@@ -69,34 +57,15 @@
             0%, 100% { opacity: 0.7; }
             50% { opacity: 1; filter: blur(2px); }
         }
-        /* Waves */
-        .wave-layer {
-            position: absolute;
-            bottom: 0; left: 0; right: 0;
-            height: 35%;
-            background: linear-gradient(to top,
-                rgba(180,40,40,0.25) 0%,
-                transparent 100%
-            );
-        }
+        .wave-layer { position: absolute; bottom: 0; left: 0; right: 0; height: 35%; background: linear-gradient(to top, rgba(180,40,40,0.25) 0%, transparent 100%); }
         .wave-lines {
             position: absolute;
             bottom: 0; left: 0; right: 0;
             height: 40%;
-            background-image: repeating-linear-gradient(
-                to top,
-                transparent 0px,
-                transparent 18px,
-                rgba(255,154,0,0.05) 18px,
-                rgba(255,154,0,0.05) 20px
-            );
+            background-image: repeating-linear-gradient(to top, transparent 0px, transparent 18px, rgba(255,154,0,0.05) 18px, rgba(255,154,0,0.05) 20px);
             animation: wave-shift 8s linear infinite;
         }
-        @keyframes wave-shift {
-            0% { background-position: 0 0; }
-            100% { background-position: 0 -80px; }
-        }
-        /* Floating embers / sparkles */
+        @keyframes wave-shift { 0% { background-position: 0 0; } 100% { background-position: 0 -80px; } }
         .ember {
             position: absolute;
             width: 3px; height: 3px;
@@ -113,26 +82,26 @@
             100% { transform: translateY(-80px) scale(0.5); opacity: 0; }
         }
 
-        /* ─── NAV ─── */
+        /* NAV */
         .nav-glass {
-            background: rgba(12, 5, 0, 0.88);
+            background: rgba(12, 5, 0, 0.92);
             backdrop-filter: blur(24px);
-            border-bottom: 1px solid rgba(255,154,0,0.12);
+            border-bottom: 1px solid rgba(255,154,0,0.15);
         }
 
-        /* ─── CARDS ─── */
+        /* CARDS & SECTIONS */
         .content-card {
             background: linear-gradient(135deg, #150800, #0e0400);
-            border: 1px solid rgba(255,154,0,0.12);
+            border: 1px solid rgba(255,154,0,0.15);
         }
         .fund-card {
             background: linear-gradient(135deg, #150800, #0e0400);
             border: 1px solid rgba(255,154,0,0.15);
             transition: all 0.3s ease;
         }
-        .fund-card:hover { border-color: rgba(255,154,0,0.35); transform: translateY(-4px); }
+        .fund-card:hover { border-color: rgba(255,154,0,0.4); transform: translateY(-4px); }
 
-        /* ─── TIMELINE ─── */
+        /* TIMELINE */
         .vertical-timeline { position: relative; padding-left: 40px; }
         .vertical-timeline::before {
             content: '';
@@ -145,298 +114,450 @@
         .timeline-step { position: relative; margin-bottom: 32px; display: flex; align-items: flex-start; gap: 18px; }
         .timeline-dot { width: 32px; height: 32px; flex-shrink: 0; border-radius: 9999px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; z-index: 10; }
         .dot-done { background: var(--paddle-gold); color: #0c0500; }
-        .dot-active { background: var(--paddle-gold); color: #0c0500; box-shadow: 0 0 0 6px rgba(255,154,0,0.2), 0 0 20px rgba(255,154,0,0.4); }
+        .dot-active { background: var(--paddle-gold); color: #0c0500; box-shadow: 0 0 0 6px rgba(255,154,0,0.25), 0 0 25px rgba(255,154,0,0.45); }
         .dot-pending { background: #1a0a00; color: #4a2a00; border: 2px solid #2a1200; }
 
-        /* ─── GALLERY ─── */
+        /* GALLERY */
         .screenshot-gallery { scrollbar-width: none; scroll-behavior: smooth; cursor: grab; user-select: none; -webkit-overflow-scrolling: touch; }
         .screenshot-gallery:active { cursor: grabbing; }
         .screenshot-gallery::-webkit-scrollbar { display: none; }
         .screenshot-card { transition: transform 0.4s cubic-bezier(0.4,0,0.2,1); }
         .screenshot-card:hover { transform: scale(1.05); }
 
-        /* ─── CONTRIB BAR ─── */
-        .contrib-bar { background: rgba(255,255,255,0.05); border-radius: 9999px; height: 8px; overflow: hidden; }
-        .contrib-fill { height: 100%; border-radius: 9999px; transition: width 1.5s cubic-bezier(0.4,0,0.2,1); }
+        /* FORM */
+        .form-input {
+            background: #150800;
+            border: 1px solid rgba(255,154,0,0.2);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: var(--paddle-gold);
+            box-shadow: 0 0 0 4px rgba(255,154,0,0.15);
+        }
+        .form-input::placeholder { color: #4a2a00; }
 
-        /* ─── GLOW ─── */
         .glow-paddle { color: var(--paddle-gold); text-shadow: 0 0 40px rgba(255,154,0,0.5); }
-
-        /* ─── BADGE ─── */
         .badge-paddle { display: inline-flex; align-items: center; gap: 6px; padding: 5px 14px; border-radius: 9999px; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; background: rgba(255,154,0,0.1); color: var(--paddle-gold); border: 1px solid rgba(255,154,0,0.2); }
-
-        /* ─── SECTION DIVIDER ─── */
         .section-divider { width: 40px; height: 3px; background: linear-gradient(90deg, var(--paddle-gold), var(--paddle-coral)); border-radius: 9999px; }
-
         .mobile-menu { animation: slideDown 0.3s ease forwards; }
         @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .form-input { background: #150800; border: 1px solid rgba(255,154,0,0.15); color: white; transition: border-color 0.3s ease; }
-        .form-input:focus { outline: none; border-color: var(--paddle-gold); box-shadow: 0 0 0 3px rgba(255,154,0,0.1); }
-        .form-input::placeholder { color: #4a2a00; }
     </style>
 </head>
 <body class="bg-[#0c0500] text-zinc-200">
 
-    <!-- NAV -->
+    <!-- SIMPLE NAV -->
     <nav class="nav-glass fixed w-full z-50">
         <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center gap-x-3">
-                <div class="w-10 h-10 rounded-2xl flex items-center justify-center text-2xl" style="background: linear-gradient(135deg, #ff9a00, #ff5e62);">📱</div>
-                <span class="font-bold text-base md:text-xl tracking-tight text-white" style="font-family: 'Syne', sans-serif;">Make It Right Design</span>
+                <div class="w-10 h-10 rounded-2xl flex items-center justify-center text-3xl" 
+                     style="background: linear-gradient(135deg, #ff9a00, #ff5e62);">🛶</div>
+                <span class="font-bold text-2xl tracking-tighter text-white" style="font-family: 'Syne', sans-serif;">Paddle-Go</span>
             </div>
+            
             <div class="hidden md:flex items-center gap-x-8 text-sm font-medium">
-                <a href="index.html" class="text-zinc-400 hover:text-[#ff9a00] transition-colors">Home</a>
-                <div class="relative group">
-                    <button class="flex items-center gap-x-1 text-zinc-400 hover:text-[#ff9a00] transition-colors">Apps <i class="fa-solid fa-chevron-down text-xs mt-px transition-transform group-hover:rotate-180"></i></button>
-                    <div class="absolute hidden group-hover:block pt-4 w-64">
-                        <div class="rounded-2xl shadow-2xl py-3 overflow-hidden" style="background: #150800; border: 1px solid rgba(255,154,0,0.12);">
-                            <a href="rivertracker.html" class="flex items-center gap-3 px-5 py-3 hover:bg-white/5 transition-colors text-zinc-400 hover:text-[#00e5c8]">🏞️ <span>RiverTracker</span></a>
-                            <a href="paddlego.html" class="flex items-center gap-3 px-5 py-3 text-[#ff9a00]" style="background: rgba(255,154,0,0.05);">🛶 <span>Paddle-Go</span></a>
-                            <a href="dreammapper.html" class="flex items-center gap-3 px-5 py-3 hover:bg-white/5 transition-colors text-zinc-400 hover:text-[#a78bfa]">🌙 <span>DreamMapper</span></a>
-                        </div>
-                    </div>
-                </div>
+                <a href="#why" class="text-zinc-400 hover:text-[#ff9a00] transition-colors">Why Use It</a>
+                <a href="#features" class="text-zinc-400 hover:text-[#ff9a00] transition-colors">Features</a>
+                <a href="#screenshots" class="text-zinc-400 hover:text-[#ff9a00] transition-colors">Screenshots</a>
                 <a href="#funding" class="text-zinc-400 hover:text-[#ff9a00] transition-colors">Funding</a>
-                <a href="index.html#testers" class="text-zinc-400 hover:text-[#ff9a00] transition-colors">Testers</a>
-                <a href="index.html#privacy" class="text-zinc-400 hover:text-[#ff9a00] transition-colors">Privacy</a>
+                <a href="#beta" class="text-zinc-400 hover:text-[#ff9a00] transition-colors">Join Beta</a>
             </div>
-            <a href="index.html#fund" class="hidden md:flex items-center gap-x-2 px-6 py-3 rounded-2xl font-semibold text-sm text-[#0c0500]" style="background: linear-gradient(135deg, #ff9a00, #ff5e62); box-shadow: 0 0 24px rgba(255,154,0,0.3);">Fund the Launch</a>
-            <button id="hamburger" class="md:hidden text-2xl text-white"><i class="fa-solid fa-bars"></i></button>
+            
+            <a href="#funding" 
+               class="hidden md:flex items-center gap-x-2 px-7 py-3.5 rounded-2xl font-semibold text-sm text-[#0c0500]"
+               style="background: linear-gradient(135deg, #ff9a00, #ff5e62); box-shadow: 0 0 24px rgba(255,154,0,0.35);">
+                Fund the Launch
+            </a>
+            
+            <button id="hamburger" class="md:hidden text-3xl text-white"><i class="fa-solid fa-bars"></i></button>
         </div>
-        <div id="mobile-menu" class="hidden md:hidden mobile-menu border-t" style="background: #0c0500; border-color: rgba(255,154,0,0.1);">
-            <div class="px-6 py-8 flex flex-col gap-y-5 text-sm font-medium">
-                <a href="index.html" class="text-zinc-400 py-2">Home</a>
-                <div class="border-t pt-5" style="border-color: rgba(255,154,0,0.08);">
-                    <div class="text-xs uppercase tracking-widest text-zinc-600 mb-4">Apps</div>
-                    <a href="rivertracker.html" class="block py-3 pl-3 text-zinc-400">🏞️ RiverTracker</a>
-                    <a href="paddlego.html" class="block py-3 pl-3 text-[#ff9a00]">🛶 Paddle-Go</a>
-                    <a href="dreammapper.html" class="block py-3 pl-3 text-zinc-400">🌙 DreamMapper</a>
-                </div>
+        
+        <!-- MOBILE MENU -->
+        <div id="mobile-menu" class="hidden md:hidden mobile-menu border-t" style="background: #0c0500; border-color: rgba(255,154,0,0.12);">
+            <div class="px-6 py-8 flex flex-col gap-y-6 text-base font-medium">
+                <a href="#why" class="text-zinc-400 py-2">Why Use It</a>
+                <a href="#features" class="text-zinc-400 py-2">Features</a>
+                <a href="#screenshots" class="text-zinc-400 py-2">Screenshots</a>
                 <a href="#funding" class="text-zinc-400 py-2">Funding</a>
-                <a href="index.html#testers" class="text-zinc-400 py-2">Testers</a>
-                <a href="index.html#privacy" class="text-zinc-400 py-2">Privacy</a>
-                <a href="index.html#fund" class="py-4 rounded-2xl font-semibold text-center text-[#0c0500]" style="background: linear-gradient(135deg, #ff9a00, #ff5e62);">Fund the Launch</a>
+                <a href="#beta" class="text-zinc-400 py-2">Join Beta</a>
+                <a href="#funding" class="py-5 rounded-2xl font-semibold text-center text-[#0c0500]" 
+                   style="background: linear-gradient(135deg, #ff9a00, #ff5e62);">Fund the Launch</a>
             </div>
         </div>
     </nav>
 
     <!-- HERO -->
-    <header class="paddle-hero pt-24">
+    <header class="paddle-hero pt-20">
         <div class="sun-reflection"></div>
         <div class="horizon-glow"></div>
         <div class="wave-layer"></div>
         <div class="wave-lines"></div>
-        <!-- Embers -->
+        <!-- floating embers -->
         <div class="ember" style="left:15%;bottom:40%;--d:8s;--delay:0s;"></div>
         <div class="ember" style="left:30%;bottom:30%;--d:6s;--delay:1s;"></div>
         <div class="ember" style="left:50%;bottom:50%;--d:10s;--delay:0.5s;"></div>
         <div class="ember" style="left:70%;bottom:35%;--d:7s;--delay:2s;"></div>
         <div class="ember" style="left:85%;bottom:45%;--d:9s;--delay:1.5s;"></div>
-
-        <div class="max-w-5xl mx-auto px-6 text-center relative z-10 pb-16 w-full">
-            <div class="badge-paddle mb-8 mx-auto" style="display: inline-flex;">
+        
+        <div class="max-w-5xl mx-auto px-6 text-center relative z-10">
+            <div class="badge-paddle mb-8 mx-auto">
                 <i class="fa-solid fa-circle text-[6px] animate-pulse"></i>
-                In Production · Store Submission
+                IN PRODUCTION • COMING TO PLAY STORE 2026
             </div>
-            <div class="flex flex-col md:flex-row items-center justify-center gap-6 mb-8">
-                <div class="text-7xl md:text-9xl" style="filter: drop-shadow(0 0 30px rgba(255,154,0,0.5));">🛶</div>
-                <div class="text-left">
-                    <h1 class="glow-paddle" style="font-family: 'Syne', sans-serif; font-size: clamp(3rem, 9vw, 7rem); font-weight: 800; line-height: 0.95; letter-spacing: -0.04em;">Paddle-<br>Go</h1>
+            
+            <div class="flex flex-col md:flex-row items-center justify-center gap-6 mb-6">
+                <div class="text-8xl md:text-[10rem]" style="filter: drop-shadow(0 0 40px rgba(255,154,0,0.6));">🛶</div>
+                <div>
+                    <h1 class="glow-paddle text-7xl md:text-8xl font-black leading-none tracking-[-0.05em]"
+                        style="font-family: 'Syne', sans-serif;">PADDLE-GO</h1>
                 </div>
             </div>
-            <p class="text-lg md:text-2xl max-w-2xl mx-auto leading-relaxed" style="color: rgba(255,220,160,0.8);">
-                Discover paddleboarding spots, live conditions, track sessions, and connect with the community.
+            
+            <p class="max-w-2xl mx-auto text-2xl md:text-3xl leading-tight text-amber-200">
+                Arizona’s paddleboarding app.<br>
+                Live conditions. Real spots. Safer sessions.
             </p>
+            
+            <div class="mt-12 flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#beta" 
+                   class="px-10 py-5 bg-white text-[#0c0500] font-semibold rounded-3xl flex items-center justify-center gap-3 text-lg hover:scale-105 transition">
+                    <span>Join the Beta</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+                <a href="#funding" 
+                   class="px-10 py-5 border border-[#ff9a00] text-[#ff9a00] font-semibold rounded-3xl flex items-center justify-center gap-3 text-lg hover:bg-[#ff9a00] hover:text-black transition">
+                    Fund the Launch
+                </a>
+            </div>
         </div>
     </header>
 
-    <div class="max-w-6xl mx-auto px-4 md:px-6 py-16">
+    <div class="max-w-6xl mx-auto px-6 pt-16 pb-24">
 
-        <!-- ─── FEATURES + TIMELINE ─── -->
-        <div class="grid md:grid-cols-2 gap-14 items-start mb-24">
-            <div>
-                <div class="section-divider mb-6"></div>
-                <p class="text-lg text-zinc-300 leading-relaxed mb-10">
-                    Discover paddleboarding spots, check real-time conditions, track your sessions, and connect with the paddling community. Built for those who live on the water.
-                </p>
-                <div class="text-xs uppercase tracking-widest text-zinc-500 mb-5 font-semibold">Key Features</div>
-                <div class="grid grid-cols-2 gap-4 text-sm mb-8">
-                    <div class="flex items-center gap-3 text-[#ff9a00]"><span class="text-2xl">✨</span> Find spots</div>
-                    <div class="flex items-center gap-3 text-[#ff9a00]"><span class="text-2xl">🌊</span> Live conditions</div>
-                    <div class="flex items-center gap-3 text-[#ff9a00]"><span class="text-2xl">💨</span> Wind & weather</div>
-                    <div class="flex items-center gap-3 text-[#ff9a00]"><span class="text-2xl">🗺️</span> GPS launch points</div>
-                    <div class="flex items-center gap-3 text-[#ff9a00]"><span class="text-2xl">⚠️</span> Safety data</div>
-                    <div class="flex items-center gap-3 text-[#ff9a00]"><span class="text-2xl">💬</span> Community tips</div>
+        <!-- WHY YOU NEED IT -->
+        <section id="why" class="mb-24">
+            <div class="grid md:grid-cols-12 gap-12 items-center">
+                <div class="md:col-span-5">
+                    <div class="section-divider mb-4"></div>
+                    <h2 class="text-5xl md:text-6xl font-bold leading-none tracking-tighter text-white">Arizona paddleboarding is incredible — but it’s also unpredictable.</h2>
                 </div>
-                <div class="px-5 py-4 rounded-2xl text-sm text-zinc-400" style="background: rgba(255,154,0,0.04); border: 1px solid rgba(255,154,0,0.1);">
-                    Premium data unlocks for $2.99 per spot · Ads at bottom
+                <div class="md:col-span-7 text-lg leading-relaxed text-zinc-300">
+                    <p class="mb-8">
+                        Sudden wind shifts on Tempe Town Lake. Hidden currents on the Salt River. Changing water levels at Saguaro Lake. 
+                        Most paddlers rely on guesswork, Facebook groups, or outdated forecasts.
+                    </p>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 text-sm">
+                        <div class="content-card rounded-3xl p-7">
+                            <div class="text-4xl mb-4">🌊</div>
+                            <div class="font-semibold text-[#ff9a00]">No real-time conditions</div>
+                            <div class="text-zinc-400 mt-2">Wind, waves, and water temp change fast in the desert.</div>
+                        </div>
+                        <div class="content-card rounded-3xl p-7">
+                            <div class="text-4xl mb-4">🗺️</div>
+                            <div class="font-semibold text-[#ff9a00]">Hidden launch points</div>
+                            <div class="text-zinc-400 mt-2">Best spots aren’t on Google Maps.</div>
+                        </div>
+                        <div class="content-card rounded-3xl p-7">
+                            <div class="text-4xl mb-4">⚠️</div>
+                            <div class="font-semibold text-[#ff9a00]">Safety gaps</div>
+                            <div class="text-zinc-400 mt-2">No centralized alerts or community warnings.</div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div>
-                <div class="text-xs uppercase tracking-widest text-[#ff9a00] font-semibold mb-8">Development Progress</div>
-                <div class="vertical-timeline">
-                    <div class="timeline-step"><div class="timeline-dot dot-done">✓</div><div><div class="text-zinc-400 text-sm">Idea</div></div></div>
-                    <div class="timeline-step"><div class="timeline-dot dot-done">✓</div><div><div class="text-zinc-400 text-sm">Development</div></div></div>
-                    <div class="timeline-step"><div class="timeline-dot dot-active">3</div><div><div class="font-semibold text-white text-sm">Adding to Store</div><div class="text-xs text-[#ff9a00] mt-1">← Currently here</div></div></div>
-                    <div class="timeline-step"><div class="timeline-dot dot-pending">4</div><div><div class="text-zinc-500 text-sm">Closed Testing</div></div></div>
-                    <div class="timeline-step"><div class="timeline-dot dot-pending">5</div><div><div class="text-zinc-500 text-sm">Open Testing</div></div></div>
-                    <div class="timeline-step"><div class="timeline-dot dot-pending">6</div><div><div class="text-zinc-500 text-sm">Final Release</div></div></div>
+            
+            <div class="mt-20">
+                <h3 class="uppercase tracking-[0.125em] text-[#ff9a00] text-sm font-semibold mb-6">Paddle-Go fixes all of it</h3>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div>
+                        <div class="text-5xl mb-4">🔴</div>
+                        <div class="font-semibold text-xl">Live water + wind data</div>
+                        <div class="text-zinc-400 mt-3">Pulls real-time conditions from multiple sources so you never paddle into dangerous wind or waves.</div>
+                    </div>
+                    <div>
+                        <div class="text-5xl mb-4">📍</div>
+                        <div class="font-semibold text-xl">GPS-verified launch points</div>
+                        <div class="text-zinc-400 mt-3">Crowdsourced + curated Arizona spots with parking, restrooms, and difficulty ratings.</div>
+                    </div>
+                    <div>
+                        <div class="text-5xl mb-4">👥</div>
+                        <div class="font-semibold text-xl">Local community</div>
+                        <div class="text-zinc-400 mt-3">Share tips, report hazards, and meet other Arizona paddlers.</div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- ─── PROMO VIDEO ─── -->
-        <div class="mb-16 max-w-lg mx-auto">
-            <div class="text-xs uppercase tracking-widest text-[#ff9a00] font-semibold mb-4 text-center">Official Promo</div>
+        <!-- FEATURES + TIMELINE -->
+        <section id="features" class="mb-24">
+            <div class="grid md:grid-cols-2 gap-16">
+                <!-- Features -->
+                <div>
+                    <div class="section-divider mb-6"></div>
+                    <p class="text-3xl leading-tight font-medium text-white mb-10">
+                        Everything you need to paddle smarter and safer — built exclusively for Arizona waters.
+                    </p>
+                    <div class="grid grid-cols-2 gap-x-6 gap-y-8 text-lg">
+                        <div class="flex gap-4 items-start"><span class="text-3xl text-[#ff9a00]">🌊</span> Live water conditions</div>
+                        <div class="flex gap-4 items-start"><span class="text-3xl text-[#ff9a00]">💨</span> Wind &amp; weather forecasts</div>
+                        <div class="flex gap-4 items-start"><span class="text-3xl text-[#ff9a00]">🗺️</span> GPS launch points</div>
+                        <div class="flex gap-4 items-start"><span class="text-3xl text-[#ff9a00]">⚠️</span> Safety alerts</div>
+                        <div class="flex gap-4 items-start"><span class="text-3xl text-[#ff9a00]">📍</span> Session tracking</div>
+                        <div class="flex gap-4 items-start"><span class="text-3xl text-[#ff9a00]">💬</span> Community forum</div>
+                    </div>
+                    <div class="mt-12 p-6 rounded-3xl text-sm bg-[#150800] border border-[#ff9a00]/10 text-zinc-400">
+                        Free core features • Premium spot data $2.99 one-time • No subscriptions
+                    </div>
+                </div>
+                
+                <!-- Progress -->
+                <div>
+                    <div class="text-[#ff9a00] uppercase tracking-widest text-sm font-semibold mb-6">Development Timeline</div>
+                    <div class="vertical-timeline">
+                        <div class="timeline-step"><div class="timeline-dot dot-done">✓</div><div class="text-zinc-300">Idea &amp; Research</div></div>
+                        <div class="timeline-step"><div class="timeline-dot dot-done">✓</div><div class="text-zinc-300">Core Development</div></div>
+                        <div class="timeline-step"><div class="timeline-dot dot-active">3</div><div><div class="font-semibold">Store Submission</div><div class="text-xs text-[#ff9a00]">— Currently here —</div></div></div>
+                        <div class="timeline-step"><div class="timeline-dot dot-pending">4</div><div class="text-zinc-500">Closed Beta</div></div>
+                        <div class="timeline-step"><div class="timeline-dot dot-pending">5</div><div class="text-zinc-500">Open Testing</div></div>
+                        <div class="timeline-step"><div class="timeline-dot dot-pending">6</div><div class="text-zinc-500">Public Launch</div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- OFFICIAL PROMO -->
+        <div class="max-w-lg mx-auto mb-20">
+            <div class="text-center">
+                <div class="section-divider mx-auto mb-3"></div>
+                <div class="text-[#ff9a00] text-xs uppercase tracking-widest font-semibold">Official 14-second Promo</div>
+            </div>
             <a href="https://www.tiktok.com/@jaggedop/video/7615032395443555597" target="_blank"
-               class="group flex flex-col items-center justify-center p-10 rounded-3xl text-center transition-all"
-               style="background: linear-gradient(135deg, #150800, #1a0a00); border: 1px solid rgba(255,154,0,0.2);">
-                <div class="w-20 h-20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform" style="background: rgba(255,154,0,0.12);">
-                    <i class="fa-solid fa-play text-4xl text-[#ff9a00]"></i>
+               class="group block mt-6 p-10 rounded-3xl transition-all content-card">
+                <div class="mx-auto w-20 h-20 rounded-2xl bg-[#ff9a00]/10 flex items-center justify-center mb-8 group-hover:scale-110 transition">
+                    <i class="fa-solid fa-play text-5xl text-[#ff9a00]"></i>
                 </div>
-                <div class="font-bold text-xl text-white mb-2" style="font-family: 'Syne', sans-serif;">Watch the Official 14-second Promo</div>
-                <div class="text-sm mb-5" style="color: rgba(255,200,120,0.7);">Real footage from the river · TikTok Live Ad</div>
-                <div class="text-xs uppercase tracking-widest px-5 py-2 rounded-full" style="background: rgba(255,154,0,0.08); color: #ff9a00; border: 1px solid rgba(255,154,0,0.15);">
-                    Watch on TikTok <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i>
+                <div class="text-center">
+                    <div class="font-bold text-2xl">Watch the real river footage</div>
+                    <div class="text-zinc-400 mt-2">Shot on the Salt River • TikTok viral ad</div>
                 </div>
             </a>
         </div>
 
-        <!-- ─── SCREENSHOTS ─── -->
-        <div class="mb-24">
-            <div class="flex items-center justify-between mb-8">
+        <!-- SCREENSHOTS -->
+        <section id="screenshots" class="mb-24">
+            <div class="flex justify-between items-end mb-8">
                 <div>
                     <div class="section-divider mb-3"></div>
-                    <div class="text-xs uppercase tracking-widest text-[#ff9a00] font-semibold">Real In-App Screenshots</div>
+                    <div class="text-[#ff9a00] uppercase text-sm font-semibold tracking-widest">Real In-App Screenshots</div>
                 </div>
-                <div class="text-xs text-zinc-600">Drag or swipe <i class="fa-solid fa-arrows-left-right ml-1"></i></div>
+                <div class="text-xs text-zinc-500">Swipe or drag →</div>
             </div>
-            <div class="screenshot-gallery flex gap-6 overflow-x-auto pb-6 snap-x snap-mandatory">
-                <div class="flex-shrink-0 w-64 md:w-80 snap-center screenshot-card"><img src="assets/pg555.png" alt="Paddle-Go" class="w-full rounded-3xl shadow-2xl" style="border: 1px solid rgba(255,154,0,0.15);"></div>
-                <div class="flex-shrink-0 w-64 md:w-80 snap-center screenshot-card"><img src="assets/pg444.png" alt="Paddle-Go" class="w-full rounded-3xl shadow-2xl" style="border: 1px solid rgba(255,154,0,0.15);"></div>
-                <div class="flex-shrink-0 w-64 md:w-80 snap-center screenshot-card"><img src="assets/pg333.png" alt="Paddle-Go" class="w-full rounded-3xl shadow-2xl" style="border: 1px solid rgba(255,154,0,0.15);"></div>
-                <div class="flex-shrink-0 w-64 md:w-80 snap-center screenshot-card"><img src="assets/pg1.png" alt="Paddle-Go" class="w-full rounded-3xl shadow-2xl" style="border: 1px solid rgba(255,154,0,0.15);"></div>
-                <div class="flex-shrink-0 w-64 md:w-80 snap-center screenshot-card"><img src="assets/pg2.png" alt="Paddle-Go" class="w-full rounded-3xl shadow-2xl" style="border: 1px solid rgba(255,154,0,0.15);"></div>
-                <div class="flex-shrink-0 w-64 md:w-80 snap-center screenshot-card"><img src="assets/pg3.png" alt="Paddle-Go" class="w-full rounded-3xl shadow-2xl" style="border: 1px solid rgba(255,154,0,0.15);"></div>
-            </div>
-            <p class="text-[10px] text-center text-zinc-600 mt-4">All screenshots are real in-app views · Phone-sized for perfect mobile preview</p>
-        </div>
-
-        <!-- ─── FUNDING SECTION ─── -->
-        <section id="funding" class="mb-16">
-            <div class="text-center mb-12">
-                <div class="section-divider mx-auto mb-6"></div>
-                <h2 style="font-family: 'Syne', sans-serif;" class="text-3xl md:text-5xl font-bold text-white">Where Funding Goes</h2>
-                <p class="text-zinc-500 mt-3 max-w-lg mx-auto">Every contribution to Paddle-Go goes toward specific, trackable costs to get this app live and in paddlers' hands.</p>
-            </div>
-
-            <!-- Contribution tracker -->
-            <div class="fund-card rounded-3xl p-8 mb-8">
-                <div class="flex items-center justify-between mb-6">
-                    <div>
-                        <div class="text-xs uppercase tracking-widest text-[#ff9a00] font-semibold mb-1">Contributions Received</div>
-                        <div class="text-3xl font-bold text-white" style="font-family: 'Syne', sans-serif;">$0 <span class="text-zinc-600 text-lg font-normal">raised so far</span></div>
-                    </div>
-                    <div class="text-4xl">🛶</div>
-                </div>
-                <div class="contrib-bar mb-3">
-                    <div class="contrib-fill" style="width: 0%; background: linear-gradient(90deg, #ff9a00, #ff5e62); box-shadow: 0 0 12px rgba(255,154,0,0.6);"></div>
-                </div>
-                <div class="text-xs text-zinc-600">Be the first to support Paddle-Go — every dollar gets it closer to the water 🙏</div>
-            </div>
-
-            <!-- What funding covers -->
-            <div class="grid md:grid-cols-2 gap-5">
-                <div class="fund-card rounded-2xl p-6">
-                    <div class="flex items-start gap-4">
-                        <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 text-xl" style="background: rgba(255,154,0,0.1);">🏪</div>
-                        <div>
-                            <div class="font-semibold text-white text-sm mb-1">Play Store Submission Fees</div>
-                            <div class="text-zinc-500 text-sm">Google Play Developer registration and submission review fees to get Paddle-Go live and listed publicly.</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="fund-card rounded-2xl p-6">
-                    <div class="flex items-start gap-4">
-                        <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 text-xl" style="background: rgba(255,154,0,0.1);">🌊</div>
-                        <div>
-                            <div class="font-semibold text-white text-sm mb-1">Water & Wind API Access</div>
-                            <div class="text-zinc-500 text-sm">Windy API and OpenWeather subscriptions for real-time open water conditions and wind speed data for safety.</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="fund-card rounded-2xl p-6">
-                    <div class="flex items-start gap-4">
-                        <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 text-xl" style="background: rgba(255,154,0,0.1);">🔨</div>
-                        <div>
-                            <div class="font-semibold text-white text-sm mb-1">Expo Build Credits (EAS)</div>
-                            <div class="text-zinc-500 text-sm">Managed native Android build pipeline and over-the-air update delivery for seamless app releases.</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="fund-card rounded-2xl p-6">
-                    <div class="flex items-start gap-4">
-                        <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 text-xl" style="background: rgba(255,154,0,0.1);">📣</div>
-                        <div>
-                            <div class="font-semibold text-white text-sm mb-1">TikTok & Social Ad Spend</div>
-                            <div class="text-zinc-500 text-sm">Targeted ads to reach paddleboarders, kayakers, and outdoor water sports communities for organic growth.</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="fund-card rounded-2xl p-6">
-                    <div class="flex items-start gap-4">
-                        <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 text-xl" style="background: rgba(255,154,0,0.1);">🎨</div>
-                        <div>
-                            <div class="font-semibold text-white text-sm mb-1">App Listing Design</div>
-                            <div class="text-zinc-500 text-sm">Professional store screenshots, promotional graphics, and icon polish to stand out in the Play Store search results.</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="fund-card rounded-2xl p-6">
-                    <div class="flex items-start gap-4">
-                        <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 text-xl" style="background: rgba(255,154,0,0.1);">☁️</div>
-                        <div>
-                            <div class="font-semibold text-white text-sm mb-1">Cloud Backend Hosting</div>
-                            <div class="text-zinc-500 text-sm">Appwrite database for community spots, user sessions, saved launch points, and community tip storage.</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- CTA -->
-            <div class="mt-8 text-center">
-                <a href="https://buymeacoffee.com/anthonynusbaum" target="_blank"
-                   class="inline-flex items-center gap-3 px-10 py-5 rounded-2xl font-bold text-lg text-[#0c0500] transition-all hover:scale-105"
-                   style="background: linear-gradient(135deg, #ff9a00, #ff5e62); box-shadow: 0 0 40px rgba(255,154,0,0.3);">
-                    <i class="fa-solid fa-mug-hot"></i> Support Paddle-Go
-                </a>
-                <p class="text-xs text-zinc-600 mt-4">Every amount helps · Secure via Buy Me a Coffee</p>
+            
+            <div class="screenshot-gallery flex gap-6 overflow-x-auto pb-8 snap-x snap-mandatory">
+                <div class="flex-shrink-0 w-72 md:w-96 snap-center screenshot-card"><img src="assets/pg555.png" alt="Home screen" class="w-full rounded-3xl shadow-2xl border border-[#ff9a00]/15"></div>
+                <div class="flex-shrink-0 w-72 md:w-96 snap-center screenshot-card"><img src="assets/pg444.png" alt="Live conditions" class="w-full rounded-3xl shadow-2xl border border-[#ff9a00]/15"></div>
+                <div class="flex-shrink-0 w-72 md:w-96 snap-center screenshot-card"><img src="assets/pg333.png" alt="Spot map" class="w-full rounded-3xl shadow-2xl border border-[#ff9a00]/15"></div>
+                <div class="flex-shrink-0 w-72 md:w-96 snap-center screenshot-card"><img src="assets/pg1.png" alt="Session tracking" class="w-full rounded-3xl shadow-2xl border border-[#ff9a00]/15"></div>
+                <div class="flex-shrink-0 w-72 md:w-96 snap-center screenshot-card"><img src="assets/pg2.png" alt="Community" class="w-full rounded-3xl shadow-2xl border border-[#ff9a00]/15"></div>
+                <div class="flex-shrink-0 w-72 md:w-96 snap-center screenshot-card"><img src="assets/pg3.png" alt="Safety alert" class="w-full rounded-3xl shadow-2xl border border-[#ff9a00]/15"></div>
             </div>
         </section>
+
+        <!-- FUNDING -->
+        <section id="funding" class="mb-24">
+            <div class="text-center mb-12">
+                <div class="section-divider mx-auto mb-6"></div>
+                <h2 class="text-5xl font-bold">Every dollar gets Paddle-Go on the water faster</h2>
+            </div>
+            
+            <div class="fund-card rounded-3xl p-10 mb-12">
+                <div class="flex justify-between items-center mb-8">
+                    <div>
+                        <div class="uppercase text-xs tracking-widest text-[#ff9a00]">Raised so far</div>
+                        <div class="text-6xl font-black text-white">$0</div>
+                    </div>
+                    <div class="text-6xl">🛶</div>
+                </div>
+                <div class="h-3 bg-white/10 rounded-full overflow-hidden">
+                    <div class="h-3 w-0 bg-gradient-to-r from-[#ff9a00] to-[#ff5e62] rounded-full transition-all"></div>
+                </div>
+                <p class="text-xs text-zinc-500 mt-3">Be the first paddler to help launch the app</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="fund-card rounded-3xl p-8">
+                    <div class="flex gap-5">
+                        <div class="text-4xl">🏪</div>
+                        <div>
+                            <div class="font-semibold">Play Store fees</div>
+                            <div class="text-sm text-zinc-400">Developer account + submission</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="fund-card rounded-3xl p-8">
+                    <div class="flex gap-5">
+                        <div class="text-4xl">🌬️</div>
+                        <div>
+                            <div class="font-semibold">Weather &amp; wind APIs</div>
+                            <div class="text-sm text-zinc-400">Real-time Arizona data</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="fund-card rounded-3xl p-8">
+                    <div class="flex gap-5">
+                        <div class="text-4xl">☁️</div>
+                        <div>
+                            <div class="font-semibold">Backend hosting</div>
+                            <div class="text-sm text-zinc-400">Community spots &amp; user data</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="fund-card rounded-3xl p-8">
+                    <div class="flex gap-5">
+                        <div class="text-4xl">📣</div>
+                        <div>
+                            <div class="font-semibold">Launch marketing</div>
+                            <div class="text-sm text-zinc-400">TikTok &amp; local ads</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-12 text-center">
+                <a href="https://buymeacoffee.com/anthonynusbaum" target="_blank"
+                   class="inline-flex items-center gap-4 px-12 py-6 rounded-3xl text-xl font-bold text-black bg-gradient-to-r from-[#ff9a00] to-[#ff5e62] hover:scale-105 transition">
+                    <i class="fa-solid fa-mug-hot"></i>
+                    Support Paddle-Go on Buy Me a Coffee
+                </a>
+                <p class="text-xs text-zinc-500 mt-4">100% transparent • Every dollar tracked</p>
+            </div>
+        </section>
+
+        <!-- BETA SIGNUP -->
+        <section id="beta" class="content-card rounded-3xl p-10 md:p-16">
+            <div class="max-w-2xl mx-auto text-center">
+                <div class="inline-flex items-center gap-2 bg-[#ff9a00]/10 text-[#ff9a00] text-xs font-bold tracking-widest px-6 py-2 rounded-3xl mb-6">
+                    BETA TESTING NOW OPEN
+                </div>
+                <h2 class="text-5xl font-bold leading-none tracking-tighter mb-4">Help shape Paddle-Go</h2>
+                <p class="text-2xl text-zinc-400">Real Arizona paddlers. Real feedback. 30-second signup.</p>
+            </div>
+            
+            <form id="beta-form" class="max-w-lg mx-auto mt-14 space-y-8">
+                <div>
+                    <label class="block text-sm font-medium mb-3 text-zinc-400">Full Name</label>
+                    <input id="name" type="text" required 
+                           class="form-input w-full px-6 py-5 rounded-3xl text-lg" placeholder="Alex Rivera">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-3 text-zinc-400">Email Address</label>
+                    <input id="email" type="email" required 
+                           class="form-input w-full px-6 py-5 rounded-3xl text-lg" placeholder="you@email.com">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-3 text-zinc-400">Discord (optional)</label>
+                    <input id="discord" type="text" 
+                           class="form-input w-full px-6 py-5 rounded-3xl text-lg" placeholder="username#1234">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-3 text-zinc-400">Why do you want to test?</label>
+                    <textarea id="message" rows="4" 
+                              class="form-input w-full px-6 py-5 rounded-3xl text-lg resize-none" 
+                              placeholder="I paddle Tempe Town Lake every weekend..."></textarea>
+                </div>
+                
+                <button type="submit"
+                        class="w-full py-6 rounded-3xl font-semibold text-xl bg-gradient-to-r from-[#ff9a00] to-[#ff5e62] text-black hover:scale-105 transition flex items-center justify-center gap-3">
+                    SEND MY BETA APPLICATION
+                    <span class="text-3xl">→</span>
+                </button>
+            </form>
+            
+            <div id="success" class="hidden mt-12 p-8 rounded-3xl bg-emerald-900/30 border border-emerald-500/30 text-center">
+                <div class="text-6xl mb-4">✅</div>
+                <p class="font-semibold text-xl">Your email client just opened!</p>
+                <p class="mt-2 text-emerald-200">Click Send and we’ll reply within 48 hours.</p>
+            </div>
+            
+            <p class="text-center text-xs text-zinc-500 mt-10">Your data goes only to help.paddlego@outlook.com • Zero spam</p>
+        </section>
+
     </div>
 
     <!-- FOOTER -->
-    <footer class="border-t py-10 text-center text-xs text-zinc-600" style="border-color: rgba(255,154,0,0.08); background: #060200;">
-        <div style="font-family: 'Syne', sans-serif;" class="text-zinc-400 font-medium mb-1">Make It Right Design</div>
-        <div>Made by Anthony · Tempe, AZ · 2026</div>
-        <div class="mt-1">Hosted on GitHub Pages · Fully mobile responsive</div>
+    <footer class="bg-black py-12 text-center text-xs text-zinc-500 border-t border-[#ff9a00]/10">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex justify-center items-center gap-3 mb-4">
+                <div class="w-8 h-8 rounded-2xl bg-gradient-to-br from-[#ff9a00] to-[#ff5e62] flex items-center justify-center text-xl">🛶</div>
+                <span class="text-white font-bold tracking-tighter text-2xl">Paddle-Go</span>
+            </div>
+            <div>Made by Anthony Nusbaum • Tempe, Arizona • 2026</div>
+            <div class="mt-1">One-page landing • Hosted on GitHub Pages • Fully responsive</div>
+        </div>
     </footer>
 
     <script>
+        // Mobile menu toggle
         const hamburger = document.getElementById('hamburger');
         const mobileMenu = document.getElementById('mobile-menu');
         hamburger.addEventListener('click', () => {
-            if (mobileMenu.classList.contains('hidden')) { mobileMenu.classList.remove('hidden'); hamburger.innerHTML = '<i class="fa-solid fa-xmark"></i>'; }
-            else { mobileMenu.classList.add('hidden'); hamburger.innerHTML = '<i class="fa-solid fa-bars"></i>'; }
+            if (mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.remove('hidden');
+                hamburger.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+            } else {
+                mobileMenu.classList.add('hidden');
+                hamburger.innerHTML = '<i class="fa-solid fa-bars"></i>';
+            }
         });
-        mobileMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => { mobileMenu.classList.add('hidden'); hamburger.innerHTML = '<i class="fa-solid fa-bars"></i>'; }));
+
+        // Screenshot gallery drag
         document.querySelectorAll('.screenshot-gallery').forEach(gallery => {
-            let isDragging = false, startX, scrollLeftPos;
-            gallery.addEventListener('mousedown', e => { isDragging = true; startX = e.pageX - gallery.offsetLeft; scrollLeftPos = gallery.scrollLeft; gallery.style.cursor = 'grabbing'; });
-            gallery.addEventListener('mouseleave', () => { isDragging = false; gallery.style.cursor = 'grab'; });
-            gallery.addEventListener('mouseup', () => { isDragging = false; gallery.style.cursor = 'grab'; });
-            gallery.addEventListener('mousemove', e => { if (!isDragging) return; e.preventDefault(); gallery.scrollLeft = scrollLeftPos - (e.pageX - gallery.offsetLeft - startX) * 2.5; });
+            let isDragging = false, startX, scrollLeft;
+            gallery.addEventListener('mousedown', e => {
+                isDragging = true;
+                startX = e.pageX - gallery.offsetLeft;
+                scrollLeft = gallery.scrollLeft;
+            });
+            gallery.addEventListener('mouseleave', () => isDragging = false);
+            gallery.addEventListener('mouseup', () => isDragging = false);
+            gallery.addEventListener('mousemove', e => {
+                if (!isDragging) return;
+                e.preventDefault();
+                const x = e.pageX - gallery.offsetLeft;
+                gallery.scrollLeft = scrollLeft - (x - startX) * 2.5;
+            });
+        });
+
+        // Beta form
+        const form = document.getElementById('beta-form');
+        const success = document.getElementById('success');
+        
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const discord = document.getElementById('discord').value.trim();
+            const message = document.getElementById('message').value.trim();
+            
+            if (!name || !email) {
+                alert("Please enter your name and email.");
+                return;
+            }
+            
+            let body = `Full Name: ${name}%0AEmail: ${email}%0A`;
+            if (discord) body += `Discord: ${discord}%0A`;
+            if (message) body += `Why I want to test:%0A${message}%0A`;
+            body += `%0A---%0AI want to join the Paddle-Go beta!`;
+            
+            const mailto = `mailto:help.paddlego@outlook.com?subject=Paddle-Go%20Beta%20Tester%20Signup&body=${body}`;
+            window.location.href = mailto;
+            
+            success.classList.remove('hidden');
+            success.scrollIntoView({ behavior: 'smooth' });
+            
+            setTimeout(() => form.reset(), 1000);
         });
     </script>
 </body>
