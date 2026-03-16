@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paddle Go — Beta Tester Sign Up</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;600&amp;display=swap');
+        
+        :root {
+            --primary: 16 185 129; /* emerald-600 */
+        }
+        
+        body {
+            font-family: 'Inter', system_ui, sans-serif;
+        }
+        
+        h1, h2 {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        .focus-visible:focus {
+            outline: 3px solid rgb(16 185 129);
+            outline-offset: 3px;
+        }
+        
+        .form-input {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .form-input:focus {
+            border-color: rgb(16 185 129);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-900">
+    <!-- HEADER -->
+    <header class="border-b border-stone-200 bg-white">
+        <div class="max-w-5xl mx-auto px-6 py-5 flex items-center justify-between">
+            <div class="flex items-center gap-x-3">
+                <div class="w-9 h-9 bg-emerald-600 rounded-2xl flex items-center justify-center text-white text-3xl leading-none pt-0.5">🏓</div>
+                <div>
+                    <span class="font-semibold tracking-tighter text-3xl">Paddle</span>
+                    <span class="font-semibold tracking-tighter text-3xl text-emerald-600">Go</span>
+                </div>
+            </div>
+            <nav class="flex items-center gap-x-8 text-sm font-medium">
+                <a href="#form" class="hover:text-emerald-600 transition-colors focus-visible:focus">Sign Up</a>
+                <a href="mailto:help.paddlego@outlook.com" class="hover:text-emerald-600 transition-colors focus-visible:focus">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <div class="max-w-5xl mx-auto px-6 pt-16 pb-12 text-center">
+        <div class="inline-flex items-center gap-x-2 bg-emerald-100 text-emerald-700 text-xs font-medium tracking-widest px-4 py-2 rounded-3xl mb-6">
+            BETA TESTING OPEN
+        </div>
+        
+        <h1 class="text-6xl md:text-7xl font-semibold tracking-tighter leading-none mb-6">
+            Become a Paddle Go<br>beta tester
+        </h1>
+        
+        <p class="max-w-xl mx-auto text-xl text-stone-600">
+            Help shape the future of Paddle Go. 
+            Real users, real feedback, real impact.
+        </p>
+        
+        <div class="mt-10 flex justify-center">
+            <a href="#form" 
+               class="inline-flex items-center gap-x-3 bg-emerald-600 hover:bg-emerald-700 focus-visible:bg-emerald-700 transition-all text-white text-lg font-medium px-10 py-5 rounded-3xl shadow-lg shadow-emerald-200">
+                <span>Sign up now — takes 30 seconds</span>
+                <span class="text-2xl">→</span>
+            </a>
+        </div>
+        
+        <p class="text-xs text-stone-500 mt-8">100% free • No spam • We reply fast</p>
+    </div>
+
+    <!-- FORM SECTION -->
+    <div id="form" class="max-w-2xl mx-auto px-6 pb-20">
+        <div class="bg-white rounded-3xl shadow-xl shadow-stone-200 border border-stone-100 p-10 md:p-14">
+            <h2 class="text-3xl font-semibold tracking-tight mb-2 text-center">Tester Sign-Up Form</h2>
+            <p class="text-center text-stone-600 mb-10">We’ll email you when testing spots open.</p>
+            
+            <form id="signup-form" class="space-y-8">
+                <!-- Name -->
+                <div>
+                    <label for="name" class="block text-sm font-medium text-stone-700 mb-2">Full Name <span class="text-red-500">*</span></label>
+                    <input type="text" id="name" name="name" required
+                           class="form-input block w-full px-5 py-4 bg-stone-50 border border-stone-300 rounded-2xl text-base focus:outline-none"
+                           placeholder="Alex Rivera">
+                </div>
+                
+                <!-- Email -->
+                <div>
+                    <label for="email" class="block text-sm font-medium text-stone-700 mb-2">Email Address <span class="text-red-500">*</span></label>
+                    <input type="email" id="email" name="email" required
+                           class="form-input block w-full px-5 py-4 bg-stone-50 border border-stone-300 rounded-2xl text-base focus:outline-none"
+                           placeholder="you@email.com">
+                </div>
+                
+                <!-- Discord (optional) -->
+                <div>
+                    <label for="discord" class="block text-sm font-medium text-stone-700 mb-2">Discord Username <span class="text-stone-400">(optional)</span></label>
+                    <input type="text" id="discord" name="discord"
+                           class="form-input block w-full px-5 py-4 bg-stone-50 border border-stone-300 rounded-2xl text-base focus:outline-none"
+                           placeholder="username#1234">
+                </div>
+                
+                <!-- Why -->
+                <div>
+                    <label for="message" class="block text-sm font-medium text-stone-700 mb-2">Why do you want to test Paddle Go?</label>
+                    <textarea id="message" name="message" rows="4"
+                              class="form-input block w-full px-5 py-4 bg-stone-50 border border-stone-300 rounded-2xl text-base focus:outline-none resize-none"
+                              placeholder="I love paddle sports and want to help make the app better..."></textarea>
+                </div>
+                
+                <!-- Submit -->
+                <button type="submit"
+                        class="w-full bg-emerald-600 hover:bg-emerald-700 focus-visible:bg-emerald-700 transition-all text-white text-lg font-semibold py-6 rounded-3xl shadow-lg shadow-emerald-200 flex items-center justify-center gap-x-3">
+                    <span>Send my signup</span>
+                    <span class="text-3xl leading-none">→</span>
+                </button>
+            </form>
+            
+            <!-- Success message -->
+            <div id="success-message" class="hidden mt-8 p-6 bg-emerald-50 border border-emerald-200 rounded-3xl text-center">
+                <div class="text-4xl mb-3">✅</div>
+                <h3 class="font-semibold text-emerald-800">Email client opened!</h3>
+                <p class="text-emerald-700 mt-2 text-base">
+                    Your default email app just opened with everything pre-filled.<br>
+                    <strong>Just click Send</strong> to finish signing up.
+                </p>
+                <p class="text-xs text-emerald-600 mt-6">We usually reply within 48 hours.</p>
+            </div>
+        </div>
+        
+        <!-- Trust bar -->
+        <div class="flex justify-center gap-x-8 mt-12 text-xs text-stone-400">
+            <div class="flex items-center gap-x-1.5">
+                <span class="block w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+                Privacy protected
+            </div>
+            <div>Your data goes straight to help.paddlego@outlook.com</div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-stone-900 text-stone-400 py-12 text-center text-sm">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="flex justify-center items-center gap-x-3 mb-6">
+                <div class="w-7 h-7 bg-emerald-600 rounded-2xl flex items-center justify-center text-white text-xl">🏓</div>
+                <span class="text-white font-medium tracking-tighter text-2xl">Paddle Go</span>
+            </div>
+            
+            <p class="max-w-xs mx-auto">
+                Simple, fast, and built for real testers.<br>
+                Questions? <a href="mailto:help.paddlego@outlook.com" class="underline hover:text-white transition-colors">help.paddlego@outlook.com</a>
+            </p>
+            
+            <div class="mt-10 text-xs text-stone-500">
+                © 2026 Paddle Go • All rights reserved • Made for testers
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Tailwind script already loaded via CDN — classes are ready
+        
+        const form = document.getElementById('signup-form');
+        const successDiv = document.getElementById('success-message');
+        
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const discord = document.getElementById('discord').value.trim();
+            const message = document.getElementById('message').value.trim();
+            
+            // Basic validation
+            if (!name || !email) {
+                alert('Please enter your full name and email address.');
+                return;
+            }
+            
+            // Build email body
+            let bodyText = `Full Name: ${name}%0A`;
+            bodyText += `Email: ${email}%0A`;
+            if (discord) bodyText += `Discord: ${discord}%0A`;
+            if (message) bodyText += `Why I want to test:%0A${message}%0A`;
+            bodyText += `%0A---%0AI want to join the Paddle Go beta testing program!`;
+            
+            const mailtoLink = `mailto:help.paddlego@outlook.com?subject=Paddle%20Go%20Beta%20Tester%20Signup&body=${bodyText}`;
+            
+            // Open email client
+            window.location.href = mailtoLink;
+            
+            // Show success message
+            successDiv.classList.remove('hidden');
+            successDiv.scrollIntoView({ behavior: 'smooth' });
+            
+            // Optional: clear form after a moment
+            setTimeout(() => {
+                form.reset();
+            }, 800);
+        });
+        
+        // Keyboard accessibility helper
+        document.addEventListener('keydown', function (e) {
+            if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+                e.preventDefault();
+                document.getElementById('name').focus();
+            }
+        });
+    </script>
+</body>
+</html>
