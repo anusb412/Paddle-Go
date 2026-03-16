@@ -3,561 +3,323 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paddle-Go • Arizona Paddleboarding</title>
+    <title>Paddle-Go • Paddle Smarter, Safer, Anywhere</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&amp;family=Outfit:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <style>
-        :root {
-            --paddle-gold: #ff9a00;
-            --paddle-coral: #ff5e62;
-            --paddle-amber: #fbbf24;
-        }
-        * { font-family: 'Outfit', sans-serif; }
-        h1, h2, h3, h4 { font-family: 'Syne', sans-serif; }
+        :root { --accent: #0ea5e9; }
+        * { font-family: 'Inter', system-ui, sans-serif; }
+        .logo-font { font-family: 'Syne', sans-serif; }
         
-        /* HERO */
         .paddle-hero {
-            background: #0c0500;
-            position: relative;
-            overflow: hidden;
-            min-height: 85vh;
+            background: linear-gradient(180deg, #020617 0%, #0f172a 100%);
+            min-height: 100vh;
             display: flex;
             align-items: center;
+            position: relative;
+            overflow: hidden;
         }
-        .paddle-hero::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background:
-                radial-gradient(ellipse 100% 70% at 50% 120%, rgba(255,94,98,0.45) 0%, rgba(255,154,0,0.3) 30%, transparent 60%),
-                radial-gradient(ellipse 50% 40% at 10% 50%, rgba(255,100,0,0.15) 0%, transparent 50%),
-                radial-gradient(ellipse 40% 30% at 90% 30%, rgba(251,191,36,0.12) 0%, transparent 50%);
-        }
-        .sun-reflection {
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 200%;
-            height: 60%;
-            background: linear-gradient(to top, rgba(255,94,98,0.2) 0%, rgba(255,154,0,0.1) 30%, transparent 70%);
-            filter: blur(2px);
-        }
-        .horizon-glow {
-            position: absolute;
-            bottom: 30%;
-            left: 0; right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, transparent 0%, rgba(255,154,0,0.5) 20%, rgba(255,255,200,0.8) 50%, rgba(255,154,0,0.5) 80%, transparent 100%);
-            filter: blur(1px);
-            animation: horizon-pulse 4s ease-in-out infinite;
-        }
-        @keyframes horizon-pulse {
-            0%, 100% { opacity: 0.7; }
-            50% { opacity: 1; filter: blur(2px); }
-        }
-        .wave-layer { position: absolute; bottom: 0; left: 0; right: 0; height: 35%; background: linear-gradient(to top, rgba(180,40,40,0.25) 0%, transparent 100%); }
-        .wave-lines {
-            position: absolute;
-            bottom: 0; left: 0; right: 0;
-            height: 40%;
-            background-image: repeating-linear-gradient(to top, transparent 0px, transparent 18px, rgba(255,154,0,0.05) 18px, rgba(255,154,0,0.05) 20px);
-            animation: wave-shift 8s linear infinite;
-        }
-        @keyframes wave-shift { 0% { background-position: 0 0; } 100% { background-position: 0 -80px; } }
-        .ember {
-            position: absolute;
-            width: 3px; height: 3px;
-            border-radius: 50%;
-            background: var(--paddle-amber);
-            opacity: 0;
-            animation: float-ember var(--d, 6s) ease-in-out infinite;
-            animation-delay: var(--delay, 0s);
-        }
-        @keyframes float-ember {
-            0% { transform: translateY(0) scale(1); opacity: 0; }
-            20% { opacity: 0.8; }
-            80% { opacity: 0.4; }
-            100% { transform: translateY(-80px) scale(0.5); opacity: 0; }
-        }
-
-        /* NAV */
-        .nav-glass {
-            background: rgba(12, 5, 0, 0.92);
-            backdrop-filter: blur(24px);
-            border-bottom: 1px solid rgba(255,154,0,0.15);
-        }
-
-        /* CARDS & SECTIONS */
         .content-card {
-            background: linear-gradient(135deg, #150800, #0e0400);
-            border: 1px solid rgba(255,154,0,0.15);
+            background: #1e2937;
+            border: 1px solid #334155;
         }
-        .fund-card {
-            background: linear-gradient(135deg, #150800, #0e0400);
-            border: 1px solid rgba(255,154,0,0.15);
-            transition: all 0.3s ease;
-        }
-        .fund-card:hover { border-color: rgba(255,154,0,0.4); transform: translateY(-4px); }
-
-        /* TIMELINE */
-        .vertical-timeline { position: relative; padding-left: 40px; }
-        .vertical-timeline::before {
-            content: '';
-            position: absolute;
-            left: 17px; top: 8px; bottom: 8px;
-            width: 3px;
-            background: linear-gradient(to bottom, rgba(255,154,0,0.5), rgba(255,154,0,0.05));
-            border-radius: 9999px;
-        }
-        .timeline-step { position: relative; margin-bottom: 32px; display: flex; align-items: flex-start; gap: 18px; }
-        .timeline-dot { width: 32px; height: 32px; flex-shrink: 0; border-radius: 9999px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; z-index: 10; }
-        .dot-done { background: var(--paddle-gold); color: #0c0500; }
-        .dot-active { background: var(--paddle-gold); color: #0c0500; box-shadow: 0 0 0 6px rgba(255,154,0,0.25), 0 0 25px rgba(255,154,0,0.45); }
-        .dot-pending { background: #1a0a00; color: #4a2a00; border: 2px solid #2a1200; }
-
-        /* GALLERY */
-        .screenshot-gallery { scrollbar-width: none; scroll-behavior: smooth; cursor: grab; user-select: none; -webkit-overflow-scrolling: touch; }
-        .screenshot-gallery:active { cursor: grabbing; }
-        .screenshot-gallery::-webkit-scrollbar { display: none; }
-        .screenshot-card { transition: transform 0.4s cubic-bezier(0.4,0,0.2,1); }
-        .screenshot-card:hover { transform: scale(1.05); }
-
-        /* FORM */
         .form-input {
-            background: #150800;
-            border: 1px solid rgba(255,154,0,0.2);
+            background: #0f172a;
+            border: 1px solid #334155;
             color: white;
-            transition: all 0.3s ease;
         }
         .form-input:focus {
-            outline: none;
-            border-color: var(--paddle-gold);
-            box-shadow: 0 0 0 4px rgba(255,154,0,0.15);
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(14,165,233,0.2);
         }
-        .form-input::placeholder { color: #4a2a00; }
-
-        .glow-paddle { color: var(--paddle-gold); text-shadow: 0 0 40px rgba(255,154,0,0.5); }
-        .badge-paddle { display: inline-flex; align-items: center; gap: 6px; padding: 5px 14px; border-radius: 9999px; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; background: rgba(255,154,0,0.1); color: var(--paddle-gold); border: 1px solid rgba(255,154,0,0.2); }
-        .section-divider { width: 40px; height: 3px; background: linear-gradient(90deg, var(--paddle-gold), var(--paddle-coral)); border-radius: 9999px; }
-        .mobile-menu { animation: slideDown 0.3s ease forwards; }
-        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        .badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 9px 22px; border-radius: 9999px; font-size: 12px;
+            font-weight: 700; letter-spacing: 1px;
+            background: rgba(15,23,42,0.9); color: #e2e8f0;
+            border: 1px solid #334155;
+        }
+        
+        /* Clean focus & accessibility */
+        a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+            outline: 3px solid var(--accent);
+            outline-offset: 4px;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .gsap-animate { transition: none !important; }
+        }
     </style>
 </head>
-<body class="bg-[#0c0500] text-zinc-200">
+<body class="bg-[#020617] text-slate-200 overflow-x-hidden">
 
-    <!-- SIMPLE NAV -->
-    <nav class="nav-glass fixed w-full z-50">
-        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+    <!-- SKIP LINK -->
+    <a href="#main" class="skip-link sr-only focus:not-sr-only">Skip to main content</a>
+
+    <!-- NAV -->
+    <nav class="fixed w-full z-50 bg-[#020617]/95 backdrop-blur-xl border-b border-slate-800">
+        <div class="max-w-screen-2xl mx-auto px-6 py-5 flex justify-between items-center">
             <div class="flex items-center gap-x-3">
-                <div class="w-10 h-10 rounded-2xl flex items-center justify-center text-3xl" 
-                     style="background: linear-gradient(135deg, #ff9a00, #ff5e62);">🛶</div>
-                <span class="font-bold text-2xl tracking-tighter text-white" style="font-family: 'Syne', sans-serif;">Paddle-Go</span>
+                <div class="w-10 h-10 bg-[#0ea5e9] text-[#020617] rounded-2xl flex items-center justify-center text-3xl">🛶</div>
+                <span class="logo-font text-3xl font-semibold tracking-tighter text-white">Paddle-Go</span>
             </div>
-            
-            <div class="hidden md:flex items-center gap-x-8 text-sm font-medium">
-                <a href="#why" class="text-zinc-400 hover:text-[#ff9a00] transition-colors">Why Use It</a>
-                <a href="#features" class="text-zinc-400 hover:text-[#ff9a00] transition-colors">Features</a>
-                <a href="#screenshots" class="text-zinc-400 hover:text-[#ff9a00] transition-colors">Screenshots</a>
-                <a href="#funding" class="text-zinc-400 hover:text-[#ff9a00] transition-colors">Funding</a>
-                <a href="#beta" class="text-zinc-400 hover:text-[#ff9a00] transition-colors">Join Beta</a>
+            <div class="hidden md:flex items-center gap-x-9 text-sm font-medium">
+                <a href="#why" class="hover:text-[#0ea5e9] transition">Why It Matters</a>
+                <a href="#progress" class="hover:text-[#0ea5e9] transition">Our Progress</a>
+                <a href="#features" class="hover:text-[#0ea5e9] transition">What It Does</a>
+                <a href="#funding" class="hover:text-[#0ea5e9] transition">Support the Launch</a>
+                <a href="#beta" class="hover:text-[#0ea5e9] transition">Join Beta</a>
             </div>
-            
-            <a href="#funding" 
-               class="hidden md:flex items-center gap-x-2 px-7 py-3.5 rounded-2xl font-semibold text-sm text-[#0c0500]"
-               style="background: linear-gradient(135deg, #ff9a00, #ff5e62); box-shadow: 0 0 24px rgba(255,154,0,0.35);">
-                Fund the Launch
+            <a href="#beta" class="hidden md:flex px-8 py-3.5 rounded-3xl font-semibold text-sm bg-[#0ea5e9] text-[#020617]">
+                Join Beta – Lifetime Premium
             </a>
-            
-            <button id="hamburger" class="md:hidden text-3xl text-white"><i class="fa-solid fa-bars"></i></button>
+            <button id="hamburger" class="md:hidden text-3xl text-slate-200" aria-label="Toggle menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
         </div>
         
-        <!-- MOBILE MENU -->
-        <div id="mobile-menu" class="hidden md:hidden mobile-menu border-t" style="background: #0c0500; border-color: rgba(255,154,0,0.12);">
-            <div class="px-6 py-8 flex flex-col gap-y-6 text-base font-medium">
-                <a href="#why" class="text-zinc-400 py-2">Why Use It</a>
-                <a href="#features" class="text-zinc-400 py-2">Features</a>
-                <a href="#screenshots" class="text-zinc-400 py-2">Screenshots</a>
-                <a href="#funding" class="text-zinc-400 py-2">Funding</a>
-                <a href="#beta" class="text-zinc-400 py-2">Join Beta</a>
-                <a href="#funding" class="py-5 rounded-2xl font-semibold text-center text-[#0c0500]" 
-                   style="background: linear-gradient(135deg, #ff9a00, #ff5e62);">Fund the Launch</a>
+        <div id="mobile-menu" class="hidden md:hidden bg-[#020617] border-t border-slate-800 px-6 py-8">
+            <div class="flex flex-col gap-y-6 text-base font-medium">
+                <a href="#why">Why It Matters</a>
+                <a href="#progress">Our Progress</a>
+                <a href="#features">What It Does</a>
+                <a href="#funding">Support the Launch</a>
+                <a href="#beta">Join Beta</a>
             </div>
         </div>
     </nav>
 
-    <!-- HERO -->
-    <header class="paddle-hero pt-20">
-        <div class="sun-reflection"></div>
-        <div class="horizon-glow"></div>
-        <div class="wave-layer"></div>
-        <div class="wave-lines"></div>
-        <!-- floating embers -->
-        <div class="ember" style="left:15%;bottom:40%;--d:8s;--delay:0s;"></div>
-        <div class="ember" style="left:30%;bottom:30%;--d:6s;--delay:1s;"></div>
-        <div class="ember" style="left:50%;bottom:50%;--d:10s;--delay:0.5s;"></div>
-        <div class="ember" style="left:70%;bottom:35%;--d:7s;--delay:2s;"></div>
-        <div class="ember" style="left:85%;bottom:45%;--d:9s;--delay:1.5s;"></div>
-        
-        <div class="max-w-5xl mx-auto px-6 text-center relative z-10">
-            <div class="badge-paddle mb-8 mx-auto">
-                <i class="fa-solid fa-circle text-[6px] animate-pulse"></i>
-                IN PRODUCTION • COMING TO PLAY STORE 2026
+    <!-- HERO – The Story Opens -->
+    <header class="paddle-hero pt-20" id="hero">
+        <div class="max-w-screen-2xl mx-auto px-6 text-center relative z-10">
+            <div id="hero-badge" class="badge mx-auto mb-8">
+                <i class="fa-solid fa-circle text-xs animate-pulse"></i>
+                SPOTS ACROSS AMERICA • LAUNCHING 2026
             </div>
             
-            <div class="flex flex-col md:flex-row items-center justify-center gap-6 mb-6">
-                <div class="text-8xl md:text-[10rem]" style="filter: drop-shadow(0 0 40px rgba(255,154,0,0.6));">🛶</div>
-                <div>
-                    <h1 class="glow-paddle text-7xl md:text-8xl font-black leading-none tracking-[-0.05em]"
-                        style="font-family: 'Syne', sans-serif;">PADDLE-GO</h1>
-                </div>
+            <div class="flex justify-center items-center gap-6 mb-6">
+                <div id="hero-emoji" class="text-[8.5rem] text-[#0ea5e9]">🛶</div>
+                <h1 id="hero-title" class="logo-font text-7xl md:text-8xl font-bold tracking-[-0.05em] text-white">PADDLE-GO</h1>
             </div>
             
-            <p class="max-w-2xl mx-auto text-2xl md:text-3xl leading-tight text-amber-200">
-                Arizona’s paddleboarding app.<br>
-                Live conditions. Real spots. Safer sessions.
+            <p id="hero-hook" class="max-w-3xl mx-auto text-3xl md:text-5xl font-medium text-slate-100 leading-tight">
+                Real-time conditions.<br>
+                Hidden launch spots.<br>
+                Safer paddling — coast to coast.
             </p>
             
-            <div class="mt-12 flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="#beta" 
-                   class="px-10 py-5 bg-white text-[#0c0500] font-semibold rounded-3xl flex items-center justify-center gap-3 text-lg hover:scale-105 transition">
-                    <span>Join the Beta</span>
+            <div id="hero-story" class="mt-10 text-xl text-slate-300 max-w-xl mx-auto">
+                No more guessing wind, currents, or water levels.<br>
+                <span class="font-semibold text-white">Paddle smarter. Paddle safer. Anywhere in the US.</span>
+            </div>
+            
+            <div class="mt-16 flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#beta" class="px-12 py-6 bg-[#0ea5e9] text-[#020617] font-semibold text-2xl rounded-3xl flex items-center justify-center gap-4 hover:bg-sky-600 transition">
+                    Join Beta — Lifetime Premium Free
                     <i class="fa-solid fa-arrow-right"></i>
                 </a>
-                <a href="#funding" 
-                   class="px-10 py-5 border border-[#ff9a00] text-[#ff9a00] font-semibold rounded-3xl flex items-center justify-center gap-3 text-lg hover:bg-[#ff9a00] hover:text-black transition">
-                    Fund the Launch
+                <a href="#funding" class="px-12 py-6 border border-slate-400 text-slate-300 font-medium text-2xl rounded-3xl hover:bg-slate-800 transition">
+                    Support the Launch
                 </a>
             </div>
         </div>
     </header>
 
-    <div class="max-w-6xl mx-auto px-6 pt-16 pb-24">
+    <main id="main">
 
-        <!-- WHY YOU NEED IT -->
-        <section id="why" class="mb-24">
-            <div class="grid md:grid-cols-12 gap-12 items-center">
-                <div class="md:col-span-5">
-                    <div class="section-divider mb-4"></div>
-                    <h2 class="text-5xl md:text-6xl font-bold leading-none tracking-tighter text-white">Arizona paddleboarding is incredible — but it’s also unpredictable.</h2>
-                </div>
-                <div class="md:col-span-7 text-lg leading-relaxed text-zinc-300">
-                    <p class="mb-8">
-                        Sudden wind shifts on Tempe Town Lake. Hidden currents on the Salt River. Changing water levels at Saguaro Lake. 
-                        Most paddlers rely on guesswork, Facebook groups, or outdated forecasts.
-                    </p>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 text-sm">
-                        <div class="content-card rounded-3xl p-7">
-                            <div class="text-4xl mb-4">🌊</div>
-                            <div class="font-semibold text-[#ff9a00]">No real-time conditions</div>
-                            <div class="text-zinc-400 mt-2">Wind, waves, and water temp change fast in the desert.</div>
-                        </div>
-                        <div class="content-card rounded-3xl p-7">
-                            <div class="text-4xl mb-4">🗺️</div>
-                            <div class="font-semibold text-[#ff9a00]">Hidden launch points</div>
-                            <div class="text-zinc-400 mt-2">Best spots aren’t on Google Maps.</div>
-                        </div>
-                        <div class="content-card rounded-3xl p-7">
-                            <div class="text-4xl mb-4">⚠️</div>
-                            <div class="font-semibold text-[#ff9a00]">Safety gaps</div>
-                            <div class="text-zinc-400 mt-2">No centralized alerts or community warnings.</div>
-                        </div>
-                    </div>
-                </div>
+        <!-- WHY IT MATTERS -->
+        <section id="why" class="py-24">
+            <div class="max-w-2xl mx-auto text-center px-6">
+                <h2 class="text-5xl font-semibold text-white">Paddleboarding is incredible.<br>But it can turn dangerous fast.</h2>
+                <p class="mt-8 text-xl text-slate-300">Sudden gusts. Changing currents. Hidden hazards. Most apps give generic forecasts.<br>Paddle-Go gives you real-time, location-specific data for lakes and rivers all across America.</p>
             </div>
             
-            <div class="mt-20">
-                <h3 class="uppercase tracking-[0.125em] text-[#ff9a00] text-sm font-semibold mb-6">Paddle-Go fixes all of it</h3>
-                <div class="grid md:grid-cols-3 gap-8">
-                    <div>
-                        <div class="text-5xl mb-4">🔴</div>
-                        <div class="font-semibold text-xl">Live water + wind data</div>
-                        <div class="text-zinc-400 mt-3">Pulls real-time conditions from multiple sources so you never paddle into dangerous wind or waves.</div>
+            <div class="grid md:grid-cols-3 gap-8 mt-16 max-w-screen-2xl mx-auto px-6">
+                <div class="content-card p-10 rounded-3xl text-center">
+                    <div class="text-6xl mb-6">🌬️</div>
+                    <div class="text-2xl font-semibold">Live wind &amp; water data</div>
+                    <div class="text-slate-400 mt-4">Updated every 15 minutes — no more paddling into 30 mph gusts.</div>
+                </div>
+                <div class="content-card p-10 rounded-3xl text-center">
+                    <div class="text-6xl mb-6">🗺️</div>
+                    <div class="text-2xl font-semibold">Real US launch points</div>
+                    <div class="text-slate-400 mt-4">Crowdsourced spots with parking, restrooms &amp; ratings nationwide.</div>
+                </div>
+                <div class="content-card p-10 rounded-3xl text-center">
+                    <div class="text-6xl mb-6">⚠️</div>
+                    <div class="text-2xl font-semibold">Instant safety alerts</div>
+                    <div class="text-slate-400 mt-4">Lightning, high water, currents — pushed before you launch.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- OUR PROGRESS -->
+        <section id="progress" class="py-24 bg-[#0f172a]">
+            <div class="max-w-screen-2xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
+                <div>
+                    <h2 class="text-5xl font-semibold text-white">Core app complete.<br>Store submission underway.</h2>
+                    <p class="mt-6 text-xl text-slate-300">Beta opens next month. Public launch Spring 2026.</p>
+                </div>
+                <div class="space-y-10">
+                    <div class="flex gap-6">
+                        <div class="w-10 h-10 bg-[#0ea5e9] text-[#020617] rounded-2xl flex items-center justify-center font-bold">✓</div>
+                        <div class="flex-1">Development complete</div>
                     </div>
-                    <div>
-                        <div class="text-5xl mb-4">📍</div>
-                        <div class="font-semibold text-xl">GPS-verified launch points</div>
-                        <div class="text-zinc-400 mt-3">Crowdsourced + curated Arizona spots with parking, restrooms, and difficulty ratings.</div>
+                    <div class="flex gap-6">
+                        <div class="w-10 h-10 bg-[#0ea5e9] text-[#020617] rounded-2xl flex items-center justify-center font-bold ring-4 ring-[#0ea5e9]/30">3</div>
+                        <div class="flex-1 text-[#0ea5e9]">Store submission — in progress</div>
                     </div>
-                    <div>
-                        <div class="text-5xl mb-4">👥</div>
-                        <div class="font-semibold text-xl">Local community</div>
-                        <div class="text-zinc-400 mt-3">Share tips, report hazards, and meet other Arizona paddlers.</div>
+                    <div class="flex gap-6 text-slate-400">
+                        <div class="w-10 h-10 border-2 border-slate-600 rounded-2xl flex items-center justify-center font-bold">4</div>
+                        <div class="flex-1">Beta testing • Public launch</div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- FEATURES + TIMELINE -->
-        <section id="features" class="mb-24">
-            <div class="grid md:grid-cols-2 gap-16">
-                <!-- Features -->
-                <div>
-                    <div class="section-divider mb-6"></div>
-                    <p class="text-3xl leading-tight font-medium text-white mb-10">
-                        Everything you need to paddle smarter and safer — built exclusively for Arizona waters.
-                    </p>
-                    <div class="grid grid-cols-2 gap-x-6 gap-y-8 text-lg">
-                        <div class="flex gap-4 items-start"><span class="text-3xl text-[#ff9a00]">🌊</span> Live water conditions</div>
-                        <div class="flex gap-4 items-start"><span class="text-3xl text-[#ff9a00]">💨</span> Wind &amp; weather forecasts</div>
-                        <div class="flex gap-4 items-start"><span class="text-3xl text-[#ff9a00]">🗺️</span> GPS launch points</div>
-                        <div class="flex gap-4 items-start"><span class="text-3xl text-[#ff9a00]">⚠️</span> Safety alerts</div>
-                        <div class="flex gap-4 items-start"><span class="text-3xl text-[#ff9a00]">📍</span> Session tracking</div>
-                        <div class="flex gap-4 items-start"><span class="text-3xl text-[#ff9a00]">💬</span> Community forum</div>
-                    </div>
-                    <div class="mt-12 p-6 rounded-3xl text-sm bg-[#150800] border border-[#ff9a00]/10 text-zinc-400">
-                        Free core features • Premium spot data $2.99 one-time • No subscriptions
-                    </div>
+        <!-- WHAT IT DOES -->
+        <section id="features" class="py-24">
+            <div class="max-w-screen-2xl mx-auto px-6">
+                <h2 class="text-center text-5xl font-semibold text-white mb-16">Everything you need in one app</h2>
+                <div class="grid md:grid-cols-2 gap-x-16 gap-y-12 text-lg">
+                    <div class="flex gap-6"><span class="text-5xl text-[#0ea5e9]">🌊</span><div><strong>Live conditions</strong><br><span class="text-slate-400">Water temp, waves, currents — 15-minute updates</span></div></div>
+                    <div class="flex gap-6"><span class="text-5xl text-[#0ea5e9]">💨</span><div><strong>Hyper-local wind</strong><br><span class="text-slate-400">Every major lake &amp; river in America</span></div></div>
+                    <div class="flex gap-6"><span class="text-5xl text-[#0ea5e9]">🗺️</span><div><strong>GPS launch points</strong><br><span class="text-slate-400">Real photos, parking, ratings — nationwide</span></div></div>
+                    <div class="flex gap-6"><span class="text-5xl text-[#0ea5e9]">⚠️</span><div><strong>Safety alerts</strong><br><span class="text-slate-400">Lightning, high water, currents — instant push</span></div></div>
+                    <div class="flex gap-6"><span class="text-5xl text-[#0ea5e9]">📍</span><div><strong>Session tracking</strong><br><span class="text-slate-400">Maps, speed, distance, personal records</span></div></div>
+                    <div class="flex gap-6"><span class="text-5xl text-[#0ea5e9]">💬</span><div><strong>Local community</strong><br><span class="text-slate-400">Share spots &amp; warnings — US paddlers only</span></div></div>
                 </div>
-                
-                <!-- Progress -->
-                <div>
-                    <div class="text-[#ff9a00] uppercase tracking-widest text-sm font-semibold mb-6">Development Timeline</div>
-                    <div class="vertical-timeline">
-                        <div class="timeline-step"><div class="timeline-dot dot-done">✓</div><div class="text-zinc-300">Idea &amp; Research</div></div>
-                        <div class="timeline-step"><div class="timeline-dot dot-done">✓</div><div class="text-zinc-300">Core Development</div></div>
-                        <div class="timeline-step"><div class="timeline-dot dot-active">3</div><div><div class="font-semibold">Store Submission</div><div class="text-xs text-[#ff9a00]">— Currently here —</div></div></div>
-                        <div class="timeline-step"><div class="timeline-dot dot-pending">4</div><div class="text-zinc-500">Closed Beta</div></div>
-                        <div class="timeline-step"><div class="timeline-dot dot-pending">5</div><div class="text-zinc-500">Open Testing</div></div>
-                        <div class="timeline-step"><div class="timeline-dot dot-pending">6</div><div class="text-zinc-500">Public Launch</div></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- OFFICIAL PROMO -->
-        <div class="max-w-lg mx-auto mb-20">
-            <div class="text-center">
-                <div class="section-divider mx-auto mb-3"></div>
-                <div class="text-[#ff9a00] text-xs uppercase tracking-widest font-semibold">Official 14-second Promo</div>
-            </div>
-            <a href="https://www.tiktok.com/@jaggedop/video/7615032395443555597" target="_blank"
-               class="group block mt-6 p-10 rounded-3xl transition-all content-card">
-                <div class="mx-auto w-20 h-20 rounded-2xl bg-[#ff9a00]/10 flex items-center justify-center mb-8 group-hover:scale-110 transition">
-                    <i class="fa-solid fa-play text-5xl text-[#ff9a00]"></i>
-                </div>
-                <div class="text-center">
-                    <div class="font-bold text-2xl">Watch the real river footage</div>
-                    <div class="text-zinc-400 mt-2">Shot on the Salt River • TikTok viral ad</div>
-                </div>
-            </a>
-        </div>
-
-        <!-- SCREENSHOTS -->
-        <section id="screenshots" class="mb-24">
-            <div class="flex justify-between items-end mb-8">
-                <div>
-                    <div class="section-divider mb-3"></div>
-                    <div class="text-[#ff9a00] uppercase text-sm font-semibold tracking-widest">Real In-App Screenshots</div>
-                </div>
-                <div class="text-xs text-zinc-500">Swipe or drag →</div>
-            </div>
-            
-            <div class="screenshot-gallery flex gap-6 overflow-x-auto pb-8 snap-x snap-mandatory">
-                <div class="flex-shrink-0 w-72 md:w-96 snap-center screenshot-card"><img src="assets/pg555.png" alt="Home screen" class="w-full rounded-3xl shadow-2xl border border-[#ff9a00]/15"></div>
-                <div class="flex-shrink-0 w-72 md:w-96 snap-center screenshot-card"><img src="assets/pg444.png" alt="Live conditions" class="w-full rounded-3xl shadow-2xl border border-[#ff9a00]/15"></div>
-                <div class="flex-shrink-0 w-72 md:w-96 snap-center screenshot-card"><img src="assets/pg333.png" alt="Spot map" class="w-full rounded-3xl shadow-2xl border border-[#ff9a00]/15"></div>
-                <div class="flex-shrink-0 w-72 md:w-96 snap-center screenshot-card"><img src="assets/pg1.png" alt="Session tracking" class="w-full rounded-3xl shadow-2xl border border-[#ff9a00]/15"></div>
-                <div class="flex-shrink-0 w-72 md:w-96 snap-center screenshot-card"><img src="assets/pg2.png" alt="Community" class="w-full rounded-3xl shadow-2xl border border-[#ff9a00]/15"></div>
-                <div class="flex-shrink-0 w-72 md:w-96 snap-center screenshot-card"><img src="assets/pg3.png" alt="Safety alert" class="w-full rounded-3xl shadow-2xl border border-[#ff9a00]/15"></div>
             </div>
         </section>
 
         <!-- FUNDING -->
-        <section id="funding" class="mb-24">
-            <div class="text-center mb-12">
-                <div class="section-divider mx-auto mb-6"></div>
-                <h2 class="text-5xl font-bold">Every dollar gets Paddle-Go on the water faster</h2>
+        <section id="funding" class="py-24 bg-[#0f172a]">
+            <div class="max-w-md mx-auto text-center px-6">
+                <h2 class="text-5xl font-semibold text-white mb-6">Help us launch faster</h2>
+                <div class="text-7xl font-semibold text-white">$50</div>
+                <div class="text-sm text-slate-400 tracking-widest">RAISED OF $425 GOAL</div>
+                <div class="h-3 bg-slate-700 rounded-full mt-8 overflow-hidden">
+                    <div id="funding-bar" class="h-full bg-[#0ea5e9] w-0"></div>
+                </div>
+                <p class="mt-8 text-lg text-slate-300">Every dollar funds real-time data, backend, and getting Paddle-Go into paddlers’ hands nationwide.</p>
             </div>
             
-            <div class="fund-card rounded-3xl p-10 mb-12">
-                <div class="flex justify-between items-center mb-8">
-                    <div>
-                        <div class="uppercase text-xs tracking-widest text-[#ff9a00]">Raised so far</div>
-                        <div class="text-6xl font-black text-white">$0</div>
-                    </div>
-                    <div class="text-6xl">🛶</div>
-                </div>
-                <div class="h-3 bg-white/10 rounded-full overflow-hidden">
-                    <div class="h-3 w-0 bg-gradient-to-r from-[#ff9a00] to-[#ff5e62] rounded-full transition-all"></div>
-                </div>
-                <p class="text-xs text-zinc-500 mt-3">Be the first paddler to help launch the app</p>
+            <div class="grid md:grid-cols-2 gap-8 mt-16 max-w-2xl mx-auto px-6">
+                <div class="content-card p-8 rounded-3xl flex gap-6"><span class="text-5xl">🏪</span><div><strong>Store fees</strong><br><span class="text-slate-400 text-sm">Submission &amp; developer account</span></div></div>
+                <div class="content-card p-8 rounded-3xl flex gap-6"><span class="text-5xl">🌬️</span><div><strong>Weather APIs</strong><br><span class="text-slate-400 text-sm">Nationwide real-time data</span></div></div>
+                <div class="content-card p-8 rounded-3xl flex gap-6"><span class="text-5xl">☁️</span><div><strong>Backend hosting</strong><br><span class="text-slate-400 text-sm">Community spots &amp; alerts</span></div></div>
+                <div class="content-card p-8 rounded-3xl flex gap-6"><span class="text-5xl">📣</span><div><strong>Launch marketing</strong><br><span class="text-slate-400 text-sm">Reach paddlers across America</span></div></div>
             </div>
             
-            <div class="grid md:grid-cols-2 gap-6">
-                <div class="fund-card rounded-3xl p-8">
-                    <div class="flex gap-5">
-                        <div class="text-4xl">🏪</div>
-                        <div>
-                            <div class="font-semibold">Play Store fees</div>
-                            <div class="text-sm text-zinc-400">Developer account + submission</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="fund-card rounded-3xl p-8">
-                    <div class="flex gap-5">
-                        <div class="text-4xl">🌬️</div>
-                        <div>
-                            <div class="font-semibold">Weather &amp; wind APIs</div>
-                            <div class="text-sm text-zinc-400">Real-time Arizona data</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="fund-card rounded-3xl p-8">
-                    <div class="flex gap-5">
-                        <div class="text-4xl">☁️</div>
-                        <div>
-                            <div class="font-semibold">Backend hosting</div>
-                            <div class="text-sm text-zinc-400">Community spots &amp; user data</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="fund-card rounded-3xl p-8">
-                    <div class="flex gap-5">
-                        <div class="text-4xl">📣</div>
-                        <div>
-                            <div class="font-semibold">Launch marketing</div>
-                            <div class="text-sm text-zinc-400">TikTok &amp; local ads</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="mt-12 text-center">
+            <div class="text-center mt-16">
                 <a href="https://buymeacoffee.com/anthonynusbaum" target="_blank"
-                   class="inline-flex items-center gap-4 px-12 py-6 rounded-3xl text-xl font-bold text-black bg-gradient-to-r from-[#ff9a00] to-[#ff5e62] hover:scale-105 transition">
+                   class="inline-flex items-center gap-5 px-14 py-7 bg-white text-[#020617] font-semibold text-2xl rounded-3xl hover:scale-105 transition">
                     <i class="fa-solid fa-mug-hot"></i>
-                    Support Paddle-Go on Buy Me a Coffee
+                    Support Paddle-Go
                 </a>
-                <p class="text-xs text-zinc-500 mt-4">100% transparent • Every dollar tracked</p>
             </div>
         </section>
 
-        <!-- BETA SIGNUP -->
-        <section id="beta" class="content-card rounded-3xl p-10 md:p-16">
-            <div class="max-w-2xl mx-auto text-center">
-                <div class="inline-flex items-center gap-2 bg-[#ff9a00]/10 text-[#ff9a00] text-xs font-bold tracking-widest px-6 py-2 rounded-3xl mb-6">
-                    BETA TESTING NOW OPEN
-                </div>
-                <h2 class="text-5xl font-bold leading-none tracking-tighter mb-4">Help shape Paddle-Go</h2>
-                <p class="text-2xl text-zinc-400">Real Arizona paddlers. Real feedback. 30-second signup.</p>
+        <!-- BETA -->
+        <section id="beta" class="py-24">
+            <div class="max-w-2xl mx-auto text-center px-6">
+                <div class="badge mx-auto mb-8">BETA OPEN NOW</div>
+                <h2 class="text-5xl font-semibold text-white">Join the beta.<br>Get Lifetime Premium forever.</h2>
+                <p class="mt-6 text-2xl text-slate-300">First 100 testers receive permanent premium access + every future update.</p>
             </div>
             
-            <form id="beta-form" class="max-w-lg mx-auto mt-14 space-y-8">
-                <div>
-                    <label class="block text-sm font-medium mb-3 text-zinc-400">Full Name</label>
-                    <input id="name" type="text" required 
-                           class="form-input w-full px-6 py-5 rounded-3xl text-lg" placeholder="Alex Rivera">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium mb-3 text-zinc-400">Email Address</label>
-                    <input id="email" type="email" required 
-                           class="form-input w-full px-6 py-5 rounded-3xl text-lg" placeholder="you@email.com">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium mb-3 text-zinc-400">Discord (optional)</label>
-                    <input id="discord" type="text" 
-                           class="form-input w-full px-6 py-5 rounded-3xl text-lg" placeholder="username#1234">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium mb-3 text-zinc-400">Why do you want to test?</label>
-                    <textarea id="message" rows="4" 
-                              class="form-input w-full px-6 py-5 rounded-3xl text-lg resize-none" 
-                              placeholder="I paddle Tempe Town Lake every weekend..."></textarea>
-                </div>
+            <form id="beta-form" class="max-w-md mx-auto mt-16 space-y-8 px-6">
+                <input id="name" type="text" required placeholder="Full Name" class="form-input w-full px-8 py-6 rounded-3xl text-xl">
+                <input id="email" type="email" required placeholder="Email Address" class="form-input w-full px-8 py-6 rounded-3xl text-xl">
+                <input id="discord" type="text" placeholder="Discord (optional)" class="form-input w-full px-8 py-6 rounded-3xl text-xl">
+                <textarea id="message" rows="3" placeholder="Why you paddle..." class="form-input w-full px-8 py-6 rounded-3xl text-xl resize-y"></textarea>
                 
-                <button type="submit"
-                        class="w-full py-6 rounded-3xl font-semibold text-xl bg-gradient-to-r from-[#ff9a00] to-[#ff5e62] text-black hover:scale-105 transition flex items-center justify-center gap-3">
-                    SEND MY BETA APPLICATION
-                    <span class="text-3xl">→</span>
+                <button type="submit" class="w-full py-8 bg-[#0ea5e9] text-[#020617] font-semibold text-2xl rounded-3xl hover:bg-sky-600 transition">
+                    SEND APPLICATION — CLAIM LIFETIME PREMIUM
                 </button>
             </form>
             
-            <div id="success" class="hidden mt-12 p-8 rounded-3xl bg-emerald-900/30 border border-emerald-500/30 text-center">
-                <div class="text-6xl mb-4">✅</div>
-                <p class="font-semibold text-xl">Your email client just opened!</p>
-                <p class="mt-2 text-emerald-200">Click Send and we’ll reply within 48 hours.</p>
+            <div id="success" class="hidden mt-12 mx-auto max-w-md p-10 bg-emerald-950 border border-emerald-700 rounded-3xl text-center">
+                <div class="text-6xl mb-6">✅</div>
+                <p class="text-2xl font-medium text-emerald-100">Email client opened.<br>Click Send — Lifetime Premium is yours upon approval.</p>
             </div>
-            
-            <p class="text-center text-xs text-zinc-500 mt-10">Your data goes only to help.paddlego@outlook.com • Zero spam</p>
         </section>
 
-    </div>
+    </main>
 
     <!-- FOOTER -->
-    <footer class="bg-black py-12 text-center text-xs text-zinc-500 border-t border-[#ff9a00]/10">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="flex justify-center items-center gap-3 mb-4">
-                <div class="w-8 h-8 rounded-2xl bg-gradient-to-br from-[#ff9a00] to-[#ff5e62] flex items-center justify-center text-xl">🛶</div>
-                <span class="text-white font-bold tracking-tighter text-2xl">Paddle-Go</span>
+    <footer class="bg-black py-16 text-center text-xs text-slate-400">
+        <div class="max-w-screen-2xl mx-auto px-6">
+            <div class="flex items-center justify-center gap-4 mb-4">
+                <div class="w-10 h-10 bg-[#0ea5e9] text-[#020617] rounded-2xl flex items-center justify-center text-3xl">🛶</div>
+                <span class="logo-font text-3xl font-semibold text-white">Paddle-Go</span>
             </div>
-            <div>Made by Anthony Nusbaum • Tempe, Arizona • 2026</div>
-            <div class="mt-1">One-page landing • Hosted on GitHub Pages • Fully responsive</div>
+            <div>Made by Anthony Nusbaum • Tempe, Arizona • Nationwide launch 2026</div>
         </div>
     </footer>
 
     <script>
-        // Mobile menu toggle
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Hero story animation
+        gsap.timeline()
+            .from("#hero-badge", { y: -50, opacity: 0, duration: 0.8 })
+            .from("#hero-emoji", { scale: 0.4, rotation: -20, opacity: 0, duration: 1.4, ease: "back.out(1.4)" }, "-=0.4")
+            .from("#hero-title", { y: 80, opacity: 0, duration: 1.1 }, "-=1")
+            .from("#hero-hook", { y: 60, opacity: 0, duration: 1 }, "-=0.7")
+            .from("#hero-story", { y: 50, opacity: 0, duration: 0.9 }, "-=0.6");
+
+        // Scroll reveals
+        gsap.utils.toArray("section").forEach(section => {
+            gsap.from(section.children, {
+                scrollTrigger: { trigger: section, start: "top 80%" },
+                y: 60,
+                opacity: 0,
+                duration: 1,
+                stagger: 0.15,
+                ease: "power2.out"
+            });
+        });
+
+        // Funding bar
+        gsap.to("#funding-bar", {
+            scrollTrigger: { trigger: "#funding", start: "top 70%" },
+            width: "12%",
+            duration: 2.2,
+            ease: "power3.out"
+        });
+
+        // Mobile menu
         const hamburger = document.getElementById('hamburger');
         const mobileMenu = document.getElementById('mobile-menu');
         hamburger.addEventListener('click', () => {
-            if (mobileMenu.classList.contains('hidden')) {
-                mobileMenu.classList.remove('hidden');
-                hamburger.innerHTML = '<i class="fa-solid fa-xmark"></i>';
-            } else {
-                mobileMenu.classList.add('hidden');
-                hamburger.innerHTML = '<i class="fa-solid fa-bars"></i>';
-            }
-        });
-
-        // Screenshot gallery drag
-        document.querySelectorAll('.screenshot-gallery').forEach(gallery => {
-            let isDragging = false, startX, scrollLeft;
-            gallery.addEventListener('mousedown', e => {
-                isDragging = true;
-                startX = e.pageX - gallery.offsetLeft;
-                scrollLeft = gallery.scrollLeft;
-            });
-            gallery.addEventListener('mouseleave', () => isDragging = false);
-            gallery.addEventListener('mouseup', () => isDragging = false);
-            gallery.addEventListener('mousemove', e => {
-                if (!isDragging) return;
-                e.preventDefault();
-                const x = e.pageX - gallery.offsetLeft;
-                gallery.scrollLeft = scrollLeft - (x - startX) * 2.5;
-            });
+            mobileMenu.classList.toggle('hidden');
+            hamburger.innerHTML = mobileMenu.classList.contains('hidden') 
+                ? '<i class="fa-solid fa-bars"></i>' 
+                : '<i class="fa-solid fa-xmark"></i>';
         });
 
         // Beta form
         const form = document.getElementById('beta-form');
         const success = document.getElementById('success');
-        
         form.addEventListener('submit', function(e) {
             e.preventDefault();
-            
             const name = document.getElementById('name').value.trim();
             const email = document.getElementById('email').value.trim();
-            const discord = document.getElementById('discord').value.trim();
-            const message = document.getElementById('message').value.trim();
+            if (!name || !email) return alert("Name and email required");
             
-            if (!name || !email) {
-                alert("Please enter your name and email.");
-                return;
-            }
+            let body = `Name: ${name}%0AEmail: ${email}%0A`;
+            if (document.getElementById('discord').value) body += `Discord: ${document.getElementById('discord').value}%0A`;
+            if (document.getElementById('message').value) body += `Why I paddle: ${document.getElementById('message').value}%0A`;
+            body += `%0A---%0AI want to join the Paddle-Go Beta and claim Lifetime Premium.`;
             
-            let body = `Full Name: ${name}%0AEmail: ${email}%0A`;
-            if (discord) body += `Discord: ${discord}%0A`;
-            if (message) body += `Why I want to test:%0A${message}%0A`;
-            body += `%0A---%0AI want to join the Paddle-Go beta!`;
-            
-            const mailto = `mailto:help.paddlego@outlook.com?subject=Paddle-Go%20Beta%20Tester%20Signup&body=${body}`;
-            window.location.href = mailto;
+            window.location.href = `mailto:help.paddlego@outlook.com?subject=Paddle-Go Beta - Lifetime Premium&body=${body}`;
             
             success.classList.remove('hidden');
             success.scrollIntoView({ behavior: 'smooth' });
-            
-            setTimeout(() => form.reset(), 1000);
+            setTimeout(() => form.reset(), 1200);
         });
     </script>
 </body>
