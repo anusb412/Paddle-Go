@@ -23,7 +23,7 @@
         }
         .content-card { background: #1e2937; border: 1px solid #334155; }
         .form-input { background: #0f172a; border: 1px solid #334155; color: white; }
-        .form-input:focus { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(14,165,233,0.2); }
+        .form-input:focus { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(14,165,233,0.2); outline: none; }
         .badge {
             display: inline-flex; align-items: center; gap: 8px;
             padding: 9px 22px; border-radius: 9999px; font-size: 12px;
@@ -50,15 +50,15 @@
             border-color: #0ea5e9;
             color: #0ea5e9;
         }
-        a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+        a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
             outline: 3px solid var(--accent); outline-offset: 4px;
         }
-        @media (prefers-reduced-motion: reduce) { .gsap-animate { transition: none !important; } }
+        select option { background: #0f172a; color: white; }
     </style>
 </head>
 <body class="bg-[#020617] text-slate-200 overflow-x-hidden">
 
-    <a href="#main" class="skip-link sr-only focus:not-sr-only">Skip to main content</a>
+    <a href="#main" class="sr-only focus:not-sr-only">Skip to main content</a>
 
     <!-- NAV -->
     <nav class="fixed w-full z-50 bg-[#020617]/95 backdrop-blur-xl border-b border-slate-800">
@@ -216,7 +216,6 @@
                 <div class="badge mx-auto mb-8">BETA OPEN NOW</div>
                 <h2 class="text-5xl font-semibold text-white">Join the beta.<br>Get Lifetime Premium forever.</h2>
                 <p class="mt-6 text-2xl text-slate-300">First 100 testers receive permanent premium access + every future update.</p>
-                <!-- Android only notice -->
                 <div class="mt-6 inline-flex items-center gap-3">
                     <span class="android-badge"><i class="fa-brands fa-android"></i> Android Only Right Now</span>
                     <span class="text-slate-500 text-sm">iOS coming soon</span>
@@ -224,19 +223,27 @@
             </div>
 
             <form id="beta-form" class="max-w-md mx-auto mt-16 space-y-6 px-6">
-                <input id="name" type="text" required placeholder="Full Name"
+                <!-- Web3Forms access key — submissions go to help.paddlego@outlook.com -->
+                <input type="hidden" name="access_key" value="17717807-7a51-4870-ab66-10db362d15a8">
+                <input type="hidden" name="subject" value="Paddle-Go Beta Application — Lifetime Premium">
+                <input type="hidden" name="from_name" value="Paddle-Go Beta Form">
+                <input type="hidden" id="preferences-field" name="Paddle Preferences" value="">
+                <!-- Honeypot spam filter -->
+                <input type="checkbox" name="botcheck" class="hidden" style="display:none">
+
+                <input id="name" name="Name" type="text" required placeholder="Full Name"
                     class="form-input w-full px-8 py-6 rounded-3xl text-xl">
 
-                <input id="email" type="email" required placeholder="Email Address"
+                <input id="email" name="Email" type="email" required placeholder="Email Address"
                     class="form-input w-full px-8 py-6 rounded-3xl text-xl">
 
-                <!-- Phone type — replaces Discord -->
                 <div>
                     <label class="block text-sm font-semibold text-slate-400 mb-3 px-2">Phone Type</label>
-                    <select id="phone-type" class="form-input w-full px-8 py-6 rounded-3xl text-xl appearance-none cursor-pointer">
+                    <select id="phone-type" name="Phone Type"
+                        class="form-input w-full px-8 py-6 rounded-3xl text-xl appearance-none cursor-pointer">
                         <option value="" disabled selected>Select your phone type</option>
                         <option value="Android">Android</option>
-                        <option value="iPhone (iOS — waitlist)">iPhone (iOS — coming soon)</option>
+                        <option value="iPhone (iOS — coming soon)">iPhone (iOS — coming soon)</option>
                         <option value="Other">Other</option>
                     </select>
                     <p class="text-xs text-slate-500 mt-2 px-2">
@@ -245,31 +252,35 @@
                     </p>
                 </div>
 
-                <!-- Favorite spot — typo fixed -->
-                <textarea id="message" rows="3"
+                <textarea id="message" name="Favorite Spot" rows="3"
                     placeholder="What's your favorite spot to paddle?"
                     class="form-input w-full px-8 py-6 rounded-3xl text-xl resize-y"></textarea>
 
-                <!-- Paddle preference — multi-select pills -->
                 <div>
-                    <label class="block text-sm font-semibold text-slate-400 mb-3 px-2">What's your preference? <span class="text-slate-600 font-normal">(select all that apply)</span></label>
+                    <label class="block text-sm font-semibold text-slate-400 mb-3 px-2">
+                        What's your preference? <span class="text-slate-600 font-normal">(select all that apply)</span>
+                    </label>
                     <div class="flex flex-wrap gap-3" id="pref-buttons">
                         <button type="button" class="pref-btn" data-value="Kayak">🛶 Kayak</button>
                         <button type="button" class="pref-btn" data-value="Canoe">🚣 Canoe</button>
                         <button type="button" class="pref-btn" data-value="Paddleboard / SUP">🏄 Paddleboard / SUP</button>
                         <button type="button" class="pref-btn" data-value="Surfboard">🌊 Surfboard</button>
                     </div>
-                    <input type="hidden" id="preferences" value="">
                 </div>
 
-                <button type="submit" class="w-full py-8 bg-[#0ea5e9] text-[#020617] font-semibold text-2xl rounded-3xl hover:bg-sky-600 transition">
+                <button type="submit" id="submit-btn"
+                    class="w-full py-8 bg-[#0ea5e9] text-[#020617] font-semibold text-2xl rounded-3xl hover:bg-sky-600 transition">
                     SEND APPLICATION — CLAIM LIFETIME PREMIUM
                 </button>
             </form>
 
             <div id="success" class="hidden mt-12 mx-auto max-w-md p-10 bg-emerald-950 border border-emerald-700 rounded-3xl text-center">
                 <div class="text-6xl mb-6">✅</div>
-                <p class="text-2xl font-medium text-emerald-100">Email client opened.<br>Click Send — Lifetime Premium is yours upon approval.</p>
+                <p class="text-2xl font-medium text-emerald-100">Application sent!<br>We'll be in touch with your APK link shortly.</p>
+            </div>
+
+            <div id="error-msg" class="hidden mt-6 mx-auto max-w-md p-6 bg-red-950 border border-red-700 rounded-3xl text-center">
+                <p class="text-red-300 font-medium">Something went wrong. Please try again or email us directly at help.paddlego@outlook.com</p>
             </div>
         </section>
 
@@ -320,7 +331,7 @@
 
         // Preference pill toggle
         const prefButtons = document.querySelectorAll('.pref-btn');
-        const prefInput   = document.getElementById('preferences');
+        const prefField   = document.getElementById('preferences-field');
         const selected    = new Set();
 
         prefButtons.forEach(btn => {
@@ -333,33 +344,50 @@
                     selected.add(val);
                     btn.classList.add('selected');
                 }
-                prefInput.value = [...selected].join(', ');
+                prefField.value = [...selected].join(', ');
             });
         });
 
-        // Beta form
-        const form    = document.getElementById('beta-form');
-        const success = document.getElementById('success');
-        form.addEventListener('submit', function(e) {
+        // Beta form — auto-submit via Web3Forms API
+        const form      = document.getElementById('beta-form');
+        const success   = document.getElementById('success');
+        const errorMsg  = document.getElementById('error-msg');
+        const submitBtn = document.getElementById('submit-btn');
+
+        form.addEventListener('submit', async function(e) {
             e.preventDefault();
-            const name      = document.getElementById('name').value.trim();
-            const email     = document.getElementById('email').value.trim();
-            const phoneType = document.getElementById('phone-type').value;
-            const spot      = document.getElementById('message').value.trim();
-            const prefs     = prefInput.value;
-            if (!name || !email) return alert("Name and email required");
 
-            let body = `Name: ${name}%0AEmail: ${email}%0A`;
-            if (phoneType)  body += `Phone Type: ${phoneType}%0A`;
-            if (spot)        body += `Favorite Spot: ${spot}%0A`;
-            if (prefs)       body += `Paddle Preferences: ${prefs}%0A`;
-            body += `%0A---%0AI want to join the Paddle-Go Beta and claim Lifetime Premium.`;
+            const name  = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            if (!name || !email) { alert("Name and email are required."); return; }
 
-            window.location.href = `mailto:help.paddlego@outlook.com?subject=Paddle-Go Beta - Lifetime Premium&body=${body}`;
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending…';
 
-            success.classList.remove('hidden');
-            success.scrollIntoView({ behavior: 'smooth' });
-            setTimeout(() => { form.reset(); selected.clear(); prefButtons.forEach(b => b.classList.remove('selected')); prefInput.value = ''; }, 1200);
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                const res = await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                const json = await res.json();
+
+                if (json.success) {
+                    form.classList.add('hidden');
+                    success.classList.remove('hidden');
+                    success.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    throw new Error(json.message || 'Submission failed');
+                }
+            } catch (err) {
+                errorMsg.classList.remove('hidden');
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'SEND APPLICATION — CLAIM LIFETIME PREMIUM';
+            }
         });
     </script>
 </body>
