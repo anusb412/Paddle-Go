@@ -32,6 +32,7 @@
       min-height: 100%;
       color: var(--ink);
       font-family: "Manrope", sans-serif;
+      font-size: clamp(14px, 0.24vw + 13px, 20px);
       background:
         radial-gradient(circle at 8% -2%, rgba(43, 245, 206, 0.22), transparent 36%),
         radial-gradient(circle at 92% 10%, rgba(84, 217, 255, 0.25), transparent 34%),
@@ -122,9 +123,9 @@
     .shell {
       position: relative;
       z-index: 2;
-      max-width: 1100px;
+      width: min(1320px, 100%);
       margin: 0 auto;
-      padding: 20px 18px 72px;
+      padding: clamp(14px, 2vw, 32px) clamp(12px, 2.3vw, 28px) calc(82px + env(safe-area-inset-bottom, 0px));
     }
 
     .topbar {
@@ -143,7 +144,7 @@
       padding: 9px 14px;
       background: rgba(2, 15, 25, 0.56);
       color: #cff1ff;
-      font-size: 0.76rem;
+      font-size: clamp(0.68rem, 0.36vw + 0.58rem, 0.88rem);
       text-transform: uppercase;
       letter-spacing: 0.09em;
       font-weight: 800;
@@ -166,7 +167,7 @@
     }
 
     .hero {
-      border-radius: 30px;
+      border-radius: clamp(18px, 2.2vw, 30px);
       border: 1px solid var(--line);
       background:
         linear-gradient(130deg, rgba(28, 74, 106, 0.6), rgba(7, 27, 43, 0.78));
@@ -227,7 +228,7 @@
 
     .hero p {
       margin: 16px 0 0;
-      max-width: 780px;
+      max-width: 68ch;
       color: var(--muted);
       font-size: clamp(1rem, 1.9vw, 1.28rem);
       line-height: 1.63;
@@ -429,7 +430,7 @@
     .sticky {
       position: fixed;
       right: 16px;
-      bottom: 16px;
+      bottom: calc(16px + env(safe-area-inset-bottom, 0px));
       z-index: 5;
       border-radius: 999px;
       border: 1px solid rgba(141, 225, 255, 0.45);
@@ -440,6 +441,8 @@
       text-decoration: none;
       box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
       animation: floatCta 2.6s ease-in-out infinite;
+      max-width: calc(100vw - 24px);
+      white-space: nowrap;
     }
 
     @keyframes floatCta {
@@ -538,7 +541,17 @@
       color: #a9cfdf;
     }
 
+    @media (max-width: 980px) {
+      .stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
     @media (max-width: 760px) {
+      .topbar {
+        justify-content: flex-start;
+      }
+
       .stats {
         grid-template-columns: 1fr;
       }
@@ -547,6 +560,239 @@
         left: 14px;
         right: 14px;
         text-align: center;
+        white-space: normal;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .shell {
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+
+      .hero {
+        padding: 16px;
+      }
+
+      .hero h1 {
+        letter-spacing: 0.02em;
+      }
+
+      .shockline {
+        display: block;
+        line-height: 1.45;
+      }
+
+      .signup-grid {
+        flex-direction: column;
+      }
+
+      .signup-grid input,
+      .signup-grid button {
+        width: 100%;
+      }
+
+      summary {
+        font-size: 0.96rem;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .pill,
+      .ticker {
+        width: 100%;
+        text-align: center;
+      }
+
+      .hero h1 {
+        font-size: clamp(1.9rem, 10.2vw, 2.6rem);
+      }
+
+      .helper,
+      #join-message {
+        font-size: 0.82rem;
+      }
+
+      .sticky {
+        left: 10px;
+        right: 10px;
+        bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+        padding: 10px 12px;
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 340px) {
+      html,
+      body {
+        font-size: 13px;
+      }
+
+      .topbar {
+        gap: 8px;
+      }
+
+      .pill,
+      .ticker {
+        padding: 7px 10px;
+        letter-spacing: 0.06em;
+      }
+
+      .hero {
+        padding: 14px;
+      }
+
+      .hero h1 {
+        font-size: clamp(1.72rem, 12vw, 2.4rem);
+        line-height: 0.95;
+      }
+
+      .hero p {
+        margin-top: 12px;
+      }
+
+      .shockline {
+        margin-top: 12px;
+        font-size: 0.74rem;
+        letter-spacing: 0.03em;
+        padding-left: 8px;
+      }
+
+      .cta-box {
+        padding: 12px;
+      }
+
+      .signup-grid input,
+      .signup-grid button {
+        min-height: 48px;
+      }
+
+      summary {
+        padding: 13px;
+      }
+    }
+
+    @media (min-width: 768px) and (max-width: 1180px) and (orientation: portrait) {
+      .shell {
+        width: min(980px, 94vw);
+      }
+
+      .hero h1 {
+        font-size: clamp(2.9rem, 7.4vw, 4.8rem);
+      }
+
+      .hero p {
+        max-width: 62ch;
+      }
+
+      .stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (min-width: 768px) and (max-width: 1366px) and (orientation: landscape) {
+      .shell {
+        width: min(1240px, 95vw);
+      }
+
+      .hero h1 {
+        font-size: clamp(3rem, 6.4vw, 5.2rem);
+      }
+
+      .hero p {
+        max-width: 66ch;
+      }
+
+      .stats {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media (min-width: 1600px) {
+      .shell {
+        width: min(1540px, 94vw);
+      }
+
+      .hero p {
+        max-width: 74ch;
+      }
+
+      .stats {
+        gap: 14px;
+      }
+    }
+
+    @media (min-width: 2200px) {
+      .shell {
+        width: min(1840px, 90vw);
+      }
+
+      .hero {
+        padding: clamp(28px, 2.6vw, 52px);
+      }
+    }
+
+    @media (min-width: 2560px) {
+      html,
+      body {
+        font-size: 22px;
+      }
+
+      .shell {
+        width: min(2280px, 90vw);
+        padding-bottom: calc(112px + env(safe-area-inset-bottom, 0px));
+      }
+
+      .hero {
+        border-radius: 34px;
+        padding: 56px;
+      }
+
+      .hero h1 {
+        font-size: clamp(4.4rem, 6.2vw, 8rem);
+      }
+
+      .hero p {
+        max-width: 76ch;
+      }
+
+      .signup-grid input,
+      .signup-grid button {
+        min-height: 72px;
+      }
+
+      .sticky {
+        font-size: 1.05rem;
+        padding: 14px 20px;
+      }
+    }
+
+    @media (min-width: 3840px) {
+      html,
+      body {
+        font-size: 24px;
+      }
+
+      .shell {
+        width: min(2860px, 88vw);
+      }
+    }
+
+    @media (hover: none) and (pointer: coarse) {
+      .signup-grid input,
+      .signup-grid button,
+      .sticky {
+        min-height: 50px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
       }
     }
   </style>
@@ -579,7 +825,7 @@
       <div class="cta-box" id="signup">
         <form id="signup-form" class="signup-grid" novalidate>
           <label for="email" style="position:absolute;left:-9999px;">Email</label>
-          <input id="email" name="email" type="email" autocomplete="email" placeholder="Drop your email for launch updates." required>
+          <input id="email" name="email" type="email" autocomplete="email" placeholder="Enter your email here to join the waitlist for Paddle-Go!" required>
           <button type="submit">Get Updates</button>
         </form>
         <p class="helper">Fast updates only: product news, premium updates, and safety feature drops.</p>
