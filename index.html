@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Paddle-GO | You Need This If You Paddleboard</title>
+  <title>Paddle-GO | Launch Intelligence for Paddleboarders</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bungee:wght@400&family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
@@ -255,13 +255,13 @@
       padding: 16px;
     }
 
-    .waitlist {
+    .signup-grid {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
     }
 
-    .waitlist input {
+    .signup-grid input {
       flex: 1 1 280px;
       min-height: 56px;
       border-radius: 14px;
@@ -274,12 +274,12 @@
       outline: none;
     }
 
-    .waitlist input:focus {
+    .signup-grid input:focus {
       border-color: var(--teal);
       box-shadow: 0 0 0 3px rgba(43, 245, 206, 0.19);
     }
 
-    .waitlist button {
+    .signup-grid button {
       min-height: 56px;
       padding: 0 24px;
       border-radius: 14px;
@@ -294,7 +294,7 @@
       animation: ctaBeat 2.4s ease-in-out infinite;
     }
 
-    .waitlist button:hover {
+    .signup-grid button:hover {
       transform: translateY(-2px);
       box-shadow: 0 16px 28px rgba(84, 217, 255, 0.46);
     }
@@ -561,8 +561,8 @@
 
   <main class="shell">
     <div class="topbar">
-      <span class="pill">Paddle-GO beta 2026</span>
-      <span class="ticker">First 100 beta testers get lifetime Paddle-GO+</span>
+      <span class="pill">Paddle-GO live 2026</span>
+      <span class="ticker">Now live for paddlers everywhere</span>
     </div>
 
     <section class="hero" aria-label="Landing hero">
@@ -576,13 +576,13 @@
       </p>
       <div class="shockline">One bad launch can ruin the whole day. One good read changes everything.</div>
 
-      <div class="cta-box" id="waitlist">
-        <form id="waitlist-form" class="waitlist" novalidate>
+      <div class="cta-box" id="signup">
+        <form id="signup-form" class="signup-grid" novalidate>
           <label for="email" style="position:absolute;left:-9999px;">Email</label>
-          <input id="email" name="email" type="email" autocomplete="email" placeholder="Drop your email. Claim your beta spot." required>
-          <button type="submit">Get Early Access</button>
+          <input id="email" name="email" type="email" autocomplete="email" placeholder="Drop your email for launch updates." required>
+          <button type="submit">Get Updates</button>
         </form>
-        <p class="helper">Fast updates only: launch timing, beta invites, and premium rollout notices.</p>
+        <p class="helper">Fast updates only: product news, premium updates, and safety feature drops.</p>
         <p id="join-message" aria-live="polite"></p>
 
         <div class="stats" aria-label="Why paddlers care">
@@ -664,23 +664,23 @@
     <footer><span id="admin-trigger" class="admin-trigger" title="Double-click for admin">Paddle-GO</span> | Safety + Intelligence + Community</footer>
   </main>
 
-  <a class="sticky" href="#waitlist">Join the Waitlist</a>
+  <a class="sticky" href="#signup">Get Updates</a>
 
   <div id="admin-modal" class="admin-modal" hidden>
     <div class="admin-card" role="dialog" aria-modal="true" aria-labelledby="admin-title">
       <div class="admin-head">
-        <h3 id="admin-title">Waitlist Emails</h3>
+        <h3 id="admin-title">Subscriber Emails</h3>
         <button type="button" id="admin-close">Close</button>
       </div>
       <p id="admin-count" class="admin-count"></p>
       <ol id="admin-email-list" class="admin-list"></ol>
-      <p id="admin-empty" class="admin-empty" hidden>No emails have signed up yet.</p>
+      <p id="admin-empty" class="admin-empty" hidden>No subscribers yet.</p>
     </div>
   </div>
 
   <script>
     const ADMIN_PASSWORD_HASH = "9407c057644eff658e72b9d7fbcad6c866b390ddcec47f19851ca6d9c655a7cb";
-    const form = document.getElementById("waitlist-form");
+    const form = document.getElementById("signup-form");
     const emailInput = document.getElementById("email");
     const message = document.getElementById("join-message");
     const adminTrigger = document.getElementById("admin-trigger");
@@ -690,9 +690,9 @@
     const adminEmailList = document.getElementById("admin-email-list");
     const adminEmpty = document.getElementById("admin-empty");
 
-    const getSavedWaitlist = () => {
+    const getSavedSubscribers = () => {
       try {
-        const saved = JSON.parse(localStorage.getItem("paddlego_waitlist") || "[]");
+        const saved = JSON.parse(localStorage.getItem("paddlego_subscribers") || "[]");
         return Array.isArray(saved) ? saved.filter((item) => typeof item === "string") : [];
       } catch (err) {
         return [];
@@ -708,9 +708,9 @@
     };
 
     const openAdminModal = () => {
-      const emails = getSavedWaitlist();
+      const emails = getSavedSubscribers();
       adminEmailList.innerHTML = "";
-      adminCount.textContent = "Total signups: " + String(emails.length);
+      adminCount.textContent = "Total subscribers: " + String(emails.length);
 
       if (emails.length === 0) {
         adminEmpty.hidden = false;
@@ -741,17 +741,17 @@
       }
 
       try {
-        const saved = JSON.parse(localStorage.getItem("paddlego_waitlist") || "[]");
+        const saved = JSON.parse(localStorage.getItem("paddlego_subscribers") || "[]");
         if (!saved.includes(email.toLowerCase())) {
           saved.push(email.toLowerCase());
-          localStorage.setItem("paddlego_waitlist", JSON.stringify(saved));
+          localStorage.setItem("paddlego_subscribers", JSON.stringify(saved));
         }
       } catch (err) {
         // Keep success UX even if localStorage is unavailable.
       }
 
       message.style.color = "var(--teal)";
-      message.textContent = "You are in. Watch your inbox for beta access.";
+      message.textContent = "You're subscribed. Watch your inbox for product updates.";
       form.reset();
     });
 
