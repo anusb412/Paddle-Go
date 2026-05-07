@@ -1,361 +1,817 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paddle-Go • Paddle Smarter, Safer, Anywhere</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <style>
-        :root { --accent: #0ea5e9; }
-        * { font-family: 'Inter', system-ui, sans-serif; }
-        .logo-font { font-family: 'Syne', sans-serif; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paddle-GO | You Need This If You Paddleboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bungee:wght@400&family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #ecf8ff;
+      --muted: #a5c7da;
+      --cyan: #54d9ff;
+      --teal: #2bf5ce;
+      --gold: #ffd766;
+      --warn: #ff9c8c;
+      --deep-1: #04111c;
+      --deep-2: #0b2841;
+      --deep-3: #061a2d;
+      --glass: rgba(13, 43, 66, 0.58);
+      --line: rgba(150, 224, 255, 0.33);
+    }
 
-        .paddle-hero {
-            background: linear-gradient(180deg, #020617 0%, #0f172a 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-        }
+    * {
+      box-sizing: border-box;
+    }
 
-        .content-card { background: #1e2937; border: 1px solid #334155; }
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      color: var(--ink);
+      font-family: "Manrope", sans-serif;
+      background:
+        radial-gradient(circle at 8% -2%, rgba(43, 245, 206, 0.22), transparent 36%),
+        radial-gradient(circle at 92% 10%, rgba(84, 217, 255, 0.25), transparent 34%),
+        linear-gradient(160deg, var(--deep-1) 0%, var(--deep-2) 45%, var(--deep-3) 100%);
+      overflow-x: hidden;
+    }
 
-        .badge {
-            display: inline-flex; align-items: center; gap: 8px;
-            padding: 9px 22px; border-radius: 9999px; font-size: 12px;
-            font-weight: 700; letter-spacing: 1px;
-            background: rgba(15,23,42,0.9); color: #e2e8f0;
-            border: 1px solid #334155;
-        }
+    .noise,
+    .grid,
+    .blobs {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+    }
 
-        .android-badge {
-            display: inline-flex; align-items: center; gap: 6px;
-            padding: 6px 16px; border-radius: 9999px; font-size: 12px;
-            font-weight: 700; letter-spacing: 0.5px;
-            background: rgba(34,197,94,0.15); color: #4ade80;
-            border: 1px solid rgba(34,197,94,0.3);
-        }
+    .grid {
+      opacity: 0.18;
+      background-image:
+        linear-gradient(transparent 39px, rgba(145, 215, 255, 0.12) 40px),
+        linear-gradient(90deg, transparent 39px, rgba(145, 215, 255, 0.12) 40px);
+      background-size: 40px 40px;
+      z-index: 0;
+      animation: gridFloat 20s linear infinite;
+    }
 
-        /* Google Form iframe wrapper */
-        .form-wrapper {
-            position: relative;
-            background: #0d1829;
-            border-radius: 28px;
-            border: 1px solid #1e3a5f;
-            overflow: hidden;
-            box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(14,165,233,0.08);
-        }
+    .noise {
+      z-index: 1;
+      opacity: 0.1;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.2) 0.4px, transparent 0.4px);
+      background-size: 3px 3px;
+    }
 
-        .form-wrapper iframe {
-            width: 100%;
-            min-height: 900px;
-            border: none;
-            display: block;
-            /* Strip Google's white background */
-            filter: invert(0);
-        }
+    .blobs {
+      z-index: 0;
+      filter: blur(42px);
+      overflow: hidden;
+    }
 
-        /* Dark overlay to blend Google's header */
-        .form-header-mask {
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 64px;
-            background: linear-gradient(180deg, #0d1829 60%, transparent 100%);
-            pointer-events: none;
-            z-index: 2;
-        }
+    .blob {
+      position: absolute;
+      width: 30vw;
+      max-width: 440px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+    }
 
-        /* Glow accent line at top of form card */
-        .form-glow-line {
-            height: 3px;
-            background: linear-gradient(90deg, transparent, #0ea5e9, #38bdf8, transparent);
-        }
+    .blob.a {
+      top: -11%;
+      left: -8%;
+      background: rgba(43, 245, 206, 0.32);
+      animation: driftA 14s ease-in-out infinite alternate;
+    }
 
-        a:focus-visible, button:focus-visible {
-            outline: 3px solid var(--accent); outline-offset: 4px;
-        }
+    .blob.b {
+      bottom: -16%;
+      right: -6%;
+      background: rgba(84, 217, 255, 0.34);
+      animation: driftB 16s ease-in-out infinite alternate;
+    }
 
-        @media (prefers-reduced-motion: reduce) {
-            * { animation: none !important; transition: none !important; }
-        }
-    </style>
+    @keyframes gridFloat {
+      from {
+        transform: translateY(0);
+      }
+      to {
+        transform: translateY(-40px);
+      }
+    }
+
+    @keyframes driftA {
+      from {
+        transform: translate(0, 0) scale(1);
+      }
+      to {
+        transform: translate(6vw, 4vh) scale(1.12);
+      }
+    }
+
+    @keyframes driftB {
+      from {
+        transform: translate(0, 0) scale(1);
+      }
+      to {
+        transform: translate(-5vw, -3vh) scale(1.13);
+      }
+    }
+
+    .shell {
+      position: relative;
+      z-index: 2;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 20px 18px 72px;
+    }
+
+    .topbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+
+    .pill,
+    .ticker {
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      padding: 9px 14px;
+      background: rgba(2, 15, 25, 0.56);
+      color: #cff1ff;
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      font-weight: 800;
+    }
+
+    .ticker {
+      border-color: rgba(255, 215, 102, 0.58);
+      color: #ffebad;
+      animation: tickerPop 2.8s ease-in-out infinite;
+    }
+
+    @keyframes tickerPop {
+      0%,
+      100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.03);
+      }
+    }
+
+    .hero {
+      border-radius: 30px;
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(130deg, rgba(28, 74, 106, 0.6), rgba(7, 27, 43, 0.78));
+      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(10px);
+      padding: clamp(22px, 4vw, 38px);
+      overflow: hidden;
+      position: relative;
+      isolation: isolate;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -18% -45% -18%;
+      height: 230px;
+      background: radial-gradient(circle at center, rgba(43, 245, 206, 0.26), transparent 65%);
+      z-index: -1;
+      animation: glowPulse 3s ease-in-out infinite;
+    }
+
+    @keyframes glowPulse {
+      0%,
+      100% {
+        opacity: 0.55;
+      }
+      50% {
+        opacity: 1;
+      }
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-family: "Bungee", sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      font-size: clamp(2.4rem, 9vw, 6.1rem);
+      line-height: 0.9;
+    }
+
+    .hero h1 .blast {
+      display: block;
+      margin-top: 7px;
+      background: linear-gradient(90deg, var(--teal), var(--cyan), #fff4bc, var(--teal));
+      background-size: 220% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: textSweep 4.6s linear infinite;
+      text-shadow: 0 0 22px rgba(84, 217, 255, 0.28);
+    }
+
+    @keyframes textSweep {
+      to {
+        background-position: 220% center;
+      }
+    }
+
+    .hero p {
+      margin: 16px 0 0;
+      max-width: 780px;
+      color: var(--muted);
+      font-size: clamp(1rem, 1.9vw, 1.28rem);
+      line-height: 1.63;
+    }
+
+    .shockline {
+      margin-top: 17px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.88rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #d7f8ff;
+      border-left: 3px solid var(--gold);
+      padding-left: 10px;
+    }
+
+    .cta-box {
+      margin-top: 22px;
+      border-radius: 21px;
+      border: 1px solid rgba(126, 209, 245, 0.44);
+      background: rgba(3, 20, 33, 0.76);
+      padding: 16px;
+    }
+
+    .waitlist {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .waitlist input {
+      flex: 1 1 280px;
+      min-height: 56px;
+      border-radius: 14px;
+      border: 1px solid rgba(162, 231, 255, 0.5);
+      background: rgba(7, 27, 42, 0.88);
+      color: var(--ink);
+      padding: 0 16px;
+      font-size: 1rem;
+      font-weight: 600;
+      outline: none;
+    }
+
+    .waitlist input:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(43, 245, 206, 0.19);
+    }
+
+    .waitlist button {
+      min-height: 56px;
+      padding: 0 24px;
+      border-radius: 14px;
+      border: 0;
+      cursor: pointer;
+      font-weight: 800;
+      font-size: 1rem;
+      color: #002234;
+      background: linear-gradient(110deg, var(--teal), var(--cyan));
+      box-shadow: 0 10px 24px rgba(84, 217, 255, 0.35);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+      animation: ctaBeat 2.4s ease-in-out infinite;
+    }
+
+    .waitlist button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 28px rgba(84, 217, 255, 0.46);
+    }
+
+    @keyframes ctaBeat {
+      0%,
+      100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.03);
+      }
+    }
+
+    .helper {
+      margin: 11px 0 0;
+      color: #8eb5c7;
+      font-size: 0.88rem;
+    }
+
+    #join-message {
+      margin: 8px 0 0;
+      min-height: 20px;
+      color: var(--teal);
+      font-size: 0.92rem;
+      font-weight: 700;
+    }
+
+    .stats {
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .stat {
+      border-radius: 14px;
+      padding: 12px;
+      border: 1px solid rgba(147, 219, 255, 0.3);
+      background: rgba(9, 33, 51, 0.72);
+    }
+
+    .stat .n {
+      font-size: clamp(1.45rem, 3.3vw, 2rem);
+      font-weight: 800;
+      color: #f6fdff;
+      line-height: 1;
+    }
+
+    .stat .k {
+      margin-top: 4px;
+      color: #abd3e7;
+      font-size: 0.8rem;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .qa-wrap {
+      margin-top: 20px;
+      display: grid;
+      gap: 12px;
+    }
+
+    details {
+      border-radius: 18px;
+      border: 1px solid rgba(138, 213, 250, 0.35);
+      background: var(--glass);
+      overflow: hidden;
+    }
+
+    summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 16px;
+      font-weight: 800;
+      font-size: 1.03rem;
+      color: #e5f7ff;
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .qa-content {
+      padding: 0 16px 16px;
+      color: #c3e2f3;
+      line-height: 1.66;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .chip {
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(166, 232, 255, 0.32);
+      background: rgba(8, 35, 55, 0.76);
+      color: #d7f2ff;
+      font-size: 0.79rem;
+      font-weight: 700;
+    }
+
+    .moment {
+      margin-top: 14px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 205, 130, 0.4);
+      background: linear-gradient(145deg, rgba(67, 47, 20, 0.64), rgba(24, 18, 10, 0.78));
+      padding: 16px;
+    }
+
+    .moment h2 {
+      margin: 0;
+      font-family: "Bungee", sans-serif;
+      font-size: clamp(1.45rem, 4.5vw, 2.5rem);
+      letter-spacing: 0.03em;
+      color: #ffe4b3;
+      text-transform: uppercase;
+      line-height: 1.06;
+    }
+
+    .moment p {
+      margin: 10px 0 0;
+      color: #ffd9ac;
+      line-height: 1.6;
+    }
+
+    .sticky {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      z-index: 5;
+      border-radius: 999px;
+      border: 1px solid rgba(141, 225, 255, 0.45);
+      color: #032132;
+      background: linear-gradient(115deg, var(--teal), var(--cyan));
+      padding: 11px 16px;
+      font-weight: 800;
+      text-decoration: none;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+      animation: floatCta 2.6s ease-in-out infinite;
+    }
+
+    @keyframes floatCta {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-5px);
+      }
+    }
+
+    footer {
+      margin-top: 24px;
+      text-align: center;
+      color: #83a5b9;
+      font-size: 0.84rem;
+    }
+
+    .admin-trigger {
+      cursor: pointer;
+      font-weight: 800;
+      color: #d9f6ff;
+      text-decoration: underline;
+      text-decoration-style: dotted;
+      text-underline-offset: 3px;
+    }
+
+    .admin-modal[hidden] {
+      display: none;
+    }
+
+    .admin-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      display: grid;
+      place-items: center;
+      background: rgba(3, 11, 17, 0.72);
+      padding: 16px;
+    }
+
+    .admin-card {
+      width: min(780px, 100%);
+      max-height: 84vh;
+      overflow: auto;
+      border-radius: 18px;
+      border: 1px solid rgba(145, 220, 255, 0.42);
+      background: linear-gradient(150deg, rgba(6, 26, 41, 0.95), rgba(8, 40, 62, 0.95));
+      padding: 18px;
+      box-shadow: 0 18px 44px rgba(0, 0, 0, 0.45);
+    }
+
+    .admin-head {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .admin-head h3 {
+      margin: 0;
+      font-size: 1rem;
+      color: #e7f8ff;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .admin-head button {
+      border: 1px solid rgba(154, 224, 255, 0.42);
+      border-radius: 10px;
+      background: rgba(8, 35, 53, 0.8);
+      color: #d7f4ff;
+      padding: 7px 11px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .admin-count {
+      margin: 0 0 10px;
+      color: #a9cfdf;
+      font-size: 0.9rem;
+    }
+
+    .admin-list {
+      margin: 0;
+      padding-left: 20px;
+      color: #d9f3ff;
+      line-height: 1.6;
+      word-break: break-word;
+    }
+
+    .admin-empty {
+      margin: 0;
+      color: #a9cfdf;
+    }
+
+    @media (max-width: 760px) {
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .sticky {
+        left: 14px;
+        right: 14px;
+        text-align: center;
+      }
+    }
+  </style>
 </head>
-<body class="bg-[#020617] text-slate-200 overflow-x-hidden">
+<body>
+  <div class="blobs" aria-hidden="true">
+    <div class="blob a"></div>
+    <div class="blob b"></div>
+  </div>
+  <div class="grid" aria-hidden="true"></div>
+  <div class="noise" aria-hidden="true"></div>
 
-    <a href="#main" class="sr-only focus:not-sr-only">Skip to main content</a>
+  <main class="shell">
+    <div class="topbar">
+      <span class="pill">Paddle-GO beta 2026</span>
+      <span class="ticker">First 100 beta testers get lifetime Paddle-GO+</span>
+    </div>
 
-    <!-- NAV -->
-    <nav class="fixed w-full z-50 bg-[#020617]/95 backdrop-blur-xl border-b border-slate-800">
-        <div class="max-w-screen-2xl mx-auto px-6 py-5 flex justify-between items-center">
-            <div class="flex items-center gap-x-3">
-                <div class="w-10 h-10 bg-[#0ea5e9] text-[#020617] rounded-2xl flex items-center justify-center text-2xl">🛶</div>
-                <span class="logo-font text-3xl font-semibold tracking-tighter text-white">Paddle-Go</span>
-            </div>
-            <div class="hidden md:flex items-center gap-x-9 text-sm font-medium">
-                <a href="#progress" class="hover:text-[#0ea5e9] transition">Our Progress</a>
-                <a href="#features" class="hover:text-[#0ea5e9] transition">What It Does</a>
-                <a href="#funding" class="hover:text-[#0ea5e9] transition">Support the Launch</a>
-            </div>
-            <a href="#beta" class="hidden md:flex px-8 py-3.5 rounded-full font-semibold text-sm bg-[#0ea5e9] text-[#020617] hover:bg-sky-400 transition">
-                Join Beta – Lifetime Premium
-            </a>
-            <button id="hamburger" class="md:hidden text-2xl text-slate-200" aria-label="Toggle menu">
-                <i class="fa-solid fa-bars"></i>
-            </button>
+    <section class="hero" aria-label="Landing hero">
+      <h1>
+        You paddleboard?
+        <span class="blast">Then you need this.</span>
+      </h1>
+      <p>
+        Paddle-GO is the missing layer between "looks fine" and "actually safe." Get real flow rates, true wind windows,
+        launch access, hazard notes, moon-phase timing, and a live Safety Beacon built for remote water.
+      </p>
+      <div class="shockline">One bad launch can ruin the whole day. One good read changes everything.</div>
+
+      <div class="cta-box" id="waitlist">
+        <form id="waitlist-form" class="waitlist" novalidate>
+          <label for="email" style="position:absolute;left:-9999px;">Email</label>
+          <input id="email" name="email" type="email" autocomplete="email" placeholder="Drop your email. Claim your beta spot." required>
+          <button type="submit">Get Early Access</button>
+        </form>
+        <p class="helper">Fast updates only: launch timing, beta invites, and premium rollout notices.</p>
+        <p id="join-message" aria-live="polite"></p>
+
+        <div class="stats" aria-label="Why paddlers care">
+          <article class="stat">
+            <div class="n" data-target="5">0</div>
+            <div class="k">Data streams in one trip planner</div>
+          </article>
+          <article class="stat">
+            <div class="n" data-target="12">0</div>
+            <div class="k">Saved spots in Paddle-GO+</div>
+          </article>
+          <article class="stat">
+            <div class="n" data-target="20">0</div>
+            <div class="k">Saved trips in Paddle-GO+</div>
+          </article>
         </div>
-        <div id="mobile-menu" class="hidden md:hidden bg-[#020617] border-t border-slate-800 px-6 py-8">
-            <div class="flex flex-col gap-y-6 text-base font-medium">
-                <a href="#progress">Our Progress</a>
-                <a href="#features">What It Does</a>
-                <a href="#funding">Support the Launch</a>
-                <a href="#beta" class="text-[#0ea5e9] font-semibold">Join Beta – Lifetime Premium</a>
-            </div>
+      </div>
+    </section>
+
+    <section class="qa-wrap" aria-label="Paddle-GO Q and A">
+      <details open>
+        <summary>Q: What is the core problem for paddlers?</summary>
+        <div class="qa-content">
+          Generic map and fitness apps miss mission-critical paddler intel. You need CFS flow, launch access, hazard context,
+          pass requirements, and live conditions before and during every outing.
         </div>
-    </nav>
+      </details>
 
-    <!-- HERO -->
-    <header class="paddle-hero pt-20" id="hero">
-        <div class="max-w-screen-2xl mx-auto px-6 text-center relative z-10 w-full">
-            <div id="hero-badge" class="badge mx-auto mb-8">
-                <i class="fa-solid fa-circle text-xs animate-pulse" style="color:#0ea5e9"></i>
-                SPOTS ACROSS AMERICA &nbsp;·&nbsp; LAUNCHING 2026
-            </div>
-
-            <div class="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-8 mb-8">
-                <div id="hero-emoji" class="text-8xl md:text-9xl">🛶</div>
-                <h1 id="hero-title" class="logo-font text-6xl md:text-8xl font-bold tracking-[-0.05em] text-white leading-none">PADDLE-GO</h1>
-            </div>
-
-            <p id="hero-hook" class="max-w-3xl mx-auto text-2xl md:text-4xl font-medium text-slate-100 leading-tight">
-                Real-time conditions.<br>
-                Hidden launch spots.<br>
-                Safer paddling — coast to coast.
-            </p>
-
-            <p id="hero-story" class="mt-8 text-lg text-slate-400 max-w-xl mx-auto">
-                No more guessing wind, currents, or water levels.<br>
-                <span class="font-semibold text-white">Paddle smarter. Paddle safer. Anywhere in the US.</span>
-            </p>
-
-            <div class="mt-12 flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="#beta"
-                   class="px-10 py-5 bg-[#0ea5e9] text-[#020617] font-bold text-xl rounded-full flex items-center justify-center gap-3 hover:bg-sky-400 transition">
-                    Join Beta — Lifetime Premium Free
-                    <i class="fa-solid fa-arrow-right"></i>
-                </a>
-                <a href="#funding"
-                   class="px-10 py-5 border border-slate-600 text-slate-300 font-medium text-xl rounded-full hover:bg-slate-800 transition">
-                    Support the Launch
-                </a>
-            </div>
+      <details>
+        <summary>Q: Why does Paddle-GO feel like "must-have" gear?</summary>
+        <div class="qa-content">
+          It combines intelligence + safety + tracking into one fast workflow. No tab-hopping. No guessing. You launch with clarity,
+          adjust on the water, and share your Safety Beacon when service gets weak.
+          <div class="chips">
+            <span class="chip">NWS Alerts</span>
+            <span class="chip">USGS Flow</span>
+            <span class="chip">Wind Windows</span>
+            <span class="chip">Launch Intel</span>
+            <span class="chip">Safety Beacon</span>
+          </div>
         </div>
-    </header>
+      </details>
 
-    <main id="main">
-
-        <!-- WHY IT MATTERS -->
-        <section id="why" class="py-24">
-            <div class="max-w-2xl mx-auto text-center px-6">
-                <h2 class="text-4xl md:text-5xl font-semibold text-white leading-tight">
-                    Paddleboarding is incredible.<br>But it can turn dangerous fast.
-                </h2>
-                <p class="mt-8 text-xl text-slate-400">
-                    Sudden gusts. Changing currents. Hidden hazards.<br>
-                    Paddle-Go gives you real-time, location-specific data for lakes and rivers all across America.
-                </p>
-            </div>
-            <div class="grid md:grid-cols-3 gap-8 mt-16 max-w-screen-xl mx-auto px-6">
-                <div class="content-card p-10 rounded-3xl text-center">
-                    <div class="text-5xl mb-5">🌬️</div>
-                    <div class="text-xl font-semibold mb-3">Live wind &amp; water data</div>
-                    <div class="text-slate-400">Updated every 15 minutes — no more paddling into 30 mph gusts.</div>
-                </div>
-                <div class="content-card p-10 rounded-3xl text-center">
-                    <div class="text-5xl mb-5">🗺️</div>
-                    <div class="text-xl font-semibold mb-3">Real US launch points</div>
-                    <div class="text-slate-400">Crowdsourced spots with parking, restrooms &amp; ratings nationwide.</div>
-                </div>
-                <div class="content-card p-10 rounded-3xl text-center">
-                    <div class="text-5xl mb-5">⚠️</div>
-                    <div class="text-xl font-semibold mb-3">Instant safety alerts</div>
-                    <div class="text-slate-400">Lightning, high water, currents — pushed before you launch.</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- OUR PROGRESS -->
-        <section id="progress" class="py-24 bg-[#0f172a]">
-            <div class="max-w-screen-xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
-                <div>
-                    <h2 class="text-4xl md:text-5xl font-semibold text-white leading-tight">
-                        Core app complete.<br>Store submission underway.
-                    </h2>
-                    <p class="mt-6 text-xl text-slate-400">Beta opens next month. Public launch Spring 2026.</p>
-                </div>
-                <div class="space-y-8">
-                    <div class="flex gap-5 items-center">
-                        <div class="w-10 h-10 shrink-0 bg-[#0ea5e9] text-[#020617] rounded-2xl flex items-center justify-center font-bold">✓</div>
-                        <div class="text-lg">Development complete</div>
-                    </div>
-                    <div class="flex gap-5 items-center">
-                        <div class="w-10 h-10 shrink-0 bg-[#0ea5e9] text-[#020617] rounded-2xl flex items-center justify-center font-bold ring-4 ring-[#0ea5e9]/30">3</div>
-                        <div class="text-lg text-[#0ea5e9] font-semibold">Store submission — in progress</div>
-                    </div>
-                    <div class="flex gap-5 items-center text-slate-500">
-                        <div class="w-10 h-10 shrink-0 border-2 border-slate-600 rounded-2xl flex items-center justify-center font-bold">4</div>
-                        <div class="text-lg">Beta testing &nbsp;·&nbsp; Public launch</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- WHAT IT DOES -->
-        <section id="features" class="py-24">
-            <div class="max-w-screen-xl mx-auto px-6">
-                <h2 class="text-center text-4xl md:text-5xl font-semibold text-white mb-16">Everything you need in one app</h2>
-                <div class="grid md:grid-cols-2 gap-x-16 gap-y-10 text-lg">
-                    <div class="flex gap-5"><span class="text-4xl shrink-0">🌊</span><div><strong class="text-white">Live conditions</strong><br><span class="text-slate-400">Water temp, waves, currents — 15-minute updates</span></div></div>
-                    <div class="flex gap-5"><span class="text-4xl shrink-0">💨</span><div><strong class="text-white">Hyper-local wind</strong><br><span class="text-slate-400">Every major lake &amp; river in America</span></div></div>
-                    <div class="flex gap-5"><span class="text-4xl shrink-0">🗺️</span><div><strong class="text-white">GPS launch points</strong><br><span class="text-slate-400">Real photos, parking, ratings — nationwide</span></div></div>
-                    <div class="flex gap-5"><span class="text-4xl shrink-0">⚠️</span><div><strong class="text-white">Safety alerts</strong><br><span class="text-slate-400">Lightning, high water, currents — instant push</span></div></div>
-                    <div class="flex gap-5"><span class="text-4xl shrink-0">📍</span><div><strong class="text-white">Session tracking</strong><br><span class="text-slate-400">Maps, speed, distance, personal records</span></div></div>
-                    <div class="flex gap-5"><span class="text-4xl shrink-0">💬</span><div><strong class="text-white">Local community</strong><br><span class="text-slate-400">Share spots &amp; warnings — US paddlers only</span></div></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- FUNDING -->
-        <section id="funding" class="py-24 bg-[#0f172a]">
-            <div class="max-w-md mx-auto text-center px-6">
-                <h2 class="text-4xl md:text-5xl font-semibold text-white mb-6">Help us launch faster</h2>
-                <div class="text-6xl font-bold text-white">$50</div>
-                <div class="text-sm text-slate-500 tracking-widest mt-1">RAISED OF $425 GOAL</div>
-                <div class="h-3 bg-slate-700 rounded-full mt-6 overflow-hidden">
-                    <div id="funding-bar" class="h-full bg-[#0ea5e9] rounded-full" style="width:0%"></div>
-                </div>
-                <p class="mt-8 text-lg text-slate-400">Every dollar funds real-time data, backend infrastructure, and getting Paddle-Go into paddlers' hands nationwide.</p>
-            </div>
-            <div class="grid md:grid-cols-2 gap-6 mt-14 max-w-2xl mx-auto px-6">
-                <div class="content-card p-7 rounded-2xl flex gap-5"><span class="text-4xl shrink-0">🏪</span><div><strong>Store fees</strong><br><span class="text-slate-400 text-sm">Submission &amp; developer account</span></div></div>
-                <div class="content-card p-7 rounded-2xl flex gap-5"><span class="text-4xl shrink-0">🌬️</span><div><strong>Weather APIs</strong><br><span class="text-slate-400 text-sm">Nationwide real-time data</span></div></div>
-                <div class="content-card p-7 rounded-2xl flex gap-5"><span class="text-4xl shrink-0">☁️</span><div><strong>Backend hosting</strong><br><span class="text-slate-400 text-sm">Community spots &amp; alerts</span></div></div>
-                <div class="content-card p-7 rounded-2xl flex gap-5"><span class="text-4xl shrink-0">📣</span><div><strong>Launch marketing</strong><br><span class="text-slate-400 text-sm">Reach paddlers across America</span></div></div>
-            </div>
-            <div class="text-center mt-14">
-                <a href="https://buymeacoffee.com/anthonynusbaum" target="_blank" rel="noopener"
-                   class="inline-flex items-center gap-4 px-12 py-6 bg-white text-[#020617] font-bold text-xl rounded-full hover:scale-105 transition-transform">
-                    <i class="fa-solid fa-mug-hot"></i>
-                    Support Paddle-Go
-                </a>
-            </div>
-        </section>
-
-        <!-- BETA — Google Form embedded -->
-        <section id="beta" class="py-24">
-            <div class="max-w-2xl mx-auto text-center px-6 mb-14">
-                <div class="badge mx-auto mb-6">
-                    <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse inline-block"></span>
-                    BETA OPEN NOW
-                </div>
-                <h2 class="text-4xl md:text-5xl font-semibold text-white leading-tight">
-                    Join the beta.<br>Get Lifetime Premium forever.
-                </h2>
-                <p class="mt-5 text-xl text-slate-400">
-                    First 100 testers receive permanent premium access + every future update — free.
-                </p>
-                <div class="mt-5 flex items-center justify-center gap-3 flex-wrap">
-                    <span class="android-badge">
-                        <i class="fa-brands fa-android"></i>
-                        Android Only Right Now
-                    </span>
-                    <span class="text-slate-500 text-sm">· iOS coming soon</span>
-                </div>
-            </div>
-
-            <!-- Embedded Google Form -->
-            <div class="max-w-2xl mx-auto px-6">
-                <div class="form-wrapper">
-                    <div class="form-glow-line"></div>
-                    <iframe
-                        src="https://docs.google.com/forms/d/e/1FAIpQLSdJMwI9JX3-2JRHNr7bkNGKUb__U982cjD7d9qspcs6zy92Cg/viewform?embedded=true"
-                        width="100%"
-                        height="950"
-                        frameborder="0"
-                        marginheight="0"
-                        marginwidth="0"
-                        title="Paddle-Go Beta Application"
-                        loading="lazy"
-                        style="background: #fff;"
-                    >
-                        Loading form…
-                    </iframe>
-                </div>
-                <p class="text-center text-slate-600 text-xs mt-4">
-                    Form powered by Google Forms · Responses go directly to the Paddle-Go team
-                </p>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- FOOTER -->
-    <footer class="bg-black py-14 text-center">
-        <div class="max-w-screen-xl mx-auto px-6">
-            <div class="flex items-center justify-center gap-3 mb-4">
-                <div class="w-9 h-9 bg-[#0ea5e9] text-[#020617] rounded-xl flex items-center justify-center text-xl">🛶</div>
-                <span class="logo-font text-2xl font-semibold text-white">Paddle-Go</span>
-            </div>
-            <p class="text-xs text-slate-600">Made by Anthony Nusbaum &nbsp;·&nbsp; Tempe, Arizona &nbsp;·&nbsp; Nationwide launch 2026</p>
+      <details>
+        <summary>Q: What do free users get?</summary>
+        <div class="qa-content">
+          A real, useful core: interactive map, live tracking HUD, community access, and leaderboard features.
+          <div class="chips">
+            <span class="chip">1 saved spot</span>
+            <span class="chip">1 saved trip</span>
+            <span class="chip">Ad-supported</span>
+          </div>
         </div>
-    </footer>
+      </details>
 
-    <script>
-        gsap.registerPlugin(ScrollTrigger);
+      <details>
+        <summary>Q: What changes with Paddle-GO+?</summary>
+        <div class="qa-content">
+          Paddle-GO+ becomes a pro-grade field tool: deep spot intelligence, advanced route planning, moon-phase night mode,
+          offline tiles, expanded saves, and ad-free performance.
+          <div class="chips">
+            <span class="chip">12 saved spots</span>
+            <span class="chip">20 saved trips</span>
+            <span class="chip">Offline maps</span>
+            <span class="chip">Night paddle mode</span>
+          </div>
+        </div>
+      </details>
+    </section>
 
-        // Hero entrance
-        gsap.timeline({ delay: 0.1 })
-            .from("#hero-badge",  { y: -40, opacity: 0, duration: 0.7 })
-            .from("#hero-emoji",  { scale: 0.5, rotation: -15, opacity: 0, duration: 1.2, ease: "back.out(1.5)" }, "-=0.3")
-            .from("#hero-title",  { y: 60, opacity: 0, duration: 1.0 }, "-=0.9")
-            .from("#hero-hook",   { y: 40, opacity: 0, duration: 0.9 }, "-=0.6")
-            .from("#hero-story",  { y: 30, opacity: 0, duration: 0.8 }, "-=0.5");
+    <section class="moment" aria-label="Emotion block">
+      <h2>This is not a fitness toy. This is launch intelligence.</h2>
+      <p>
+        The minute wind shifts or current spikes, the value is obvious. If you paddleboard, kayak, or canoe,
+        Paddle-GO is the app that makes your sessions safer, cleaner, and way more confident.
+      </p>
+    </section>
 
-        // Scroll reveals
-        gsap.utils.toArray("section").forEach(section => {
-            gsap.from(section.querySelectorAll(":scope > *"), {
-                scrollTrigger: { trigger: section, start: "top 82%" },
-                y: 50, opacity: 0, duration: 0.9, stagger: 0.12, ease: "power2.out"
-            });
+    <footer><span id="admin-trigger" class="admin-trigger" title="Double-click for admin">Paddle-GO</span> | Safety + Intelligence + Community</footer>
+  </main>
+
+  <a class="sticky" href="#waitlist">Join the Waitlist</a>
+
+  <div id="admin-modal" class="admin-modal" hidden>
+    <div class="admin-card" role="dialog" aria-modal="true" aria-labelledby="admin-title">
+      <div class="admin-head">
+        <h3 id="admin-title">Waitlist Emails</h3>
+        <button type="button" id="admin-close">Close</button>
+      </div>
+      <p id="admin-count" class="admin-count"></p>
+      <ol id="admin-email-list" class="admin-list"></ol>
+      <p id="admin-empty" class="admin-empty" hidden>No emails have signed up yet.</p>
+    </div>
+  </div>
+
+  <script>
+    const ADMIN_PASSWORD_HASH = "9407c057644eff658e72b9d7fbcad6c866b390ddcec47f19851ca6d9c655a7cb";
+    const form = document.getElementById("waitlist-form");
+    const emailInput = document.getElementById("email");
+    const message = document.getElementById("join-message");
+    const adminTrigger = document.getElementById("admin-trigger");
+    const adminModal = document.getElementById("admin-modal");
+    const adminClose = document.getElementById("admin-close");
+    const adminCount = document.getElementById("admin-count");
+    const adminEmailList = document.getElementById("admin-email-list");
+    const adminEmpty = document.getElementById("admin-empty");
+
+    const getSavedWaitlist = () => {
+      try {
+        const saved = JSON.parse(localStorage.getItem("paddlego_waitlist") || "[]");
+        return Array.isArray(saved) ? saved.filter((item) => typeof item === "string") : [];
+      } catch (err) {
+        return [];
+      }
+    };
+
+    const sha256Hex = async (text) => {
+      const encoded = new TextEncoder().encode(text);
+      const digest = await crypto.subtle.digest("SHA-256", encoded);
+      return Array.from(new Uint8Array(digest))
+        .map((b) => b.toString(16).padStart(2, "0"))
+        .join("");
+    };
+
+    const openAdminModal = () => {
+      const emails = getSavedWaitlist();
+      adminEmailList.innerHTML = "";
+      adminCount.textContent = "Total signups: " + String(emails.length);
+
+      if (emails.length === 0) {
+        adminEmpty.hidden = false;
+      } else {
+        adminEmpty.hidden = true;
+        emails.forEach((email) => {
+          const li = document.createElement("li");
+          li.textContent = email;
+          adminEmailList.appendChild(li);
         });
+      }
 
-        // Funding bar
-        gsap.to("#funding-bar", {
-            scrollTrigger: { trigger: "#funding", start: "top 70%" },
-            width: "12%", duration: 2.0, ease: "power3.out"
-        });
+      adminModal.hidden = false;
+    };
 
-        // Mobile menu
-        const hamburger   = document.getElementById('hamburger');
-        const mobileMenu  = document.getElementById('mobile-menu');
-        hamburger.addEventListener('click', () => {
-            const open = mobileMenu.classList.toggle('hidden') === false;
-            hamburger.innerHTML = open
-                ? '<i class="fa-solid fa-xmark"></i>'
-                : '<i class="fa-solid fa-bars"></i>';
-        });
+    const closeAdminModal = () => {
+      adminModal.hidden = true;
+    };
 
-        // Close mobile menu on link click
-        mobileMenu.querySelectorAll('a').forEach(a => {
-            a.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
-                hamburger.innerHTML = '<i class="fa-solid fa-bars"></i>';
-            });
-        });
-    </script>
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      const email = emailInput.value.trim();
+
+      if (!email || !email.includes("@") || !email.includes(".")) {
+        message.style.color = "var(--warn)";
+        message.textContent = "Enter a valid email to lock your spot.";
+        return;
+      }
+
+      try {
+        const saved = JSON.parse(localStorage.getItem("paddlego_waitlist") || "[]");
+        if (!saved.includes(email.toLowerCase())) {
+          saved.push(email.toLowerCase());
+          localStorage.setItem("paddlego_waitlist", JSON.stringify(saved));
+        }
+      } catch (err) {
+        // Keep success UX even if localStorage is unavailable.
+      }
+
+      message.style.color = "var(--teal)";
+      message.textContent = "You are in. Watch your inbox for beta access.";
+      form.reset();
+    });
+
+    adminTrigger.addEventListener("dblclick", async () => {
+      const entered = window.prompt("Enter admin password");
+      if (entered === null) {
+        return;
+      }
+
+      const enteredHash = await sha256Hex(entered);
+      if (enteredHash !== ADMIN_PASSWORD_HASH) {
+        window.alert("Incorrect password.");
+        return;
+      }
+
+      openAdminModal();
+    });
+
+    adminClose.addEventListener("click", closeAdminModal);
+    adminModal.addEventListener("click", (event) => {
+      if (event.target === adminModal) {
+        closeAdminModal();
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && !adminModal.hidden) {
+        closeAdminModal();
+      }
+    });
+
+    const counters = document.querySelectorAll("[data-target]");
+    const animateCounter = (el) => {
+      const target = Number(el.getAttribute("data-target"));
+      let current = 0;
+      const step = Math.max(1, Math.floor(target / 18));
+
+      const tick = () => {
+        current += step;
+        if (current >= target) {
+          el.textContent = String(target);
+          return;
+        }
+        el.textContent = String(current);
+        requestAnimationFrame(tick);
+      };
+
+      requestAnimationFrame(tick);
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.65 });
+
+    counters.forEach((counter) => observer.observe(counter));
+  </script>
 </body>
 </html>
